@@ -6,19 +6,29 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Entry.class},version = 1,  exportSchema = false)
+@Database(entities = {Entry.class, Template.class}, version = 2,  exportSchema = false)
 public abstract class MyDatabase extends RoomDatabase {
         public abstract MyDao myDao();
+    public abstract TemplateDao templateDao();
 
     private static volatile MyDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+
+
+    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            // Since we didn't alter the table, there's nothing else to do here.
+        }
+    };
 
     static MyDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
@@ -27,6 +37,9 @@ public abstract class MyDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             MyDatabase.class, "entries_database")
                             .addCallback(sRoomDatabaseCallback)
+                            //.addMigrations(MIGRATION_1_2)
+                            //.fallbackToDestructiveMigration()
+
                             .build();
                 }
             }
@@ -45,10 +58,13 @@ public abstract class MyDatabase extends RoomDatabase {
                 // Populate the database in the background.
                 // If you want to start with more words, just add them.
                 MyDao dao = INSTANCE.myDao();
+              //  TemplateDao tempDao = INSTANCE.templateDao();
 
                 Entry entry = new Entry("Just Testin","Just Testin","2020/5/5");
                 dao.insertEntry(entry);
 
+               // Template temp = new Template("Just Testin","Just Testin");
+               // tempDao.insertTemplate(temp);
             });
         }
     };

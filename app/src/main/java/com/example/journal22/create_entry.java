@@ -1,5 +1,6 @@
 package com.example.journal22;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +16,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.journal22.data.Entry;
+import com.example.journal22.data.EntryViewModel;
+import com.example.journal22.data.Template;
+import com.example.journal22.data.TemplateViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.ParseException;
@@ -24,18 +31,21 @@ import android.text.format.DateFormat;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class create_entry extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
     private static final String TAG = "MyActivity";
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
-
+    List<Template> temps;
     private static final String NumberedTemplate = "1)\n" +
             "2) I\n" +
             "3)";
 
     FloatingActionButton mAddFab;
+    private TemplateViewModel mTemplateViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +82,21 @@ public class create_entry extends AppCompatActivity {
         // Enable the Up button
         ab.setDisplayHomeAsUpEnabled(true);
 
+
+
+        mTemplateViewModel = new ViewModelProvider(this).get((TemplateViewModel.class));
+
+
+        mTemplateViewModel.getAllTemps().observe(this, words -> {
+             //Update the cached copy of the words in the adapter.
+           // Template temp = words.get(0);
+           // Toast.makeText(this, temp.getContent(), Toast.LENGTH_SHORT).show();
+           // String[] list = new String[list2.size()];
+            temps=words;
+
+        });
+
+        //save entry FAB
          mAddFab = findViewById(R.id.save_entry_btn);
 
         mAddFab.setOnClickListener(
@@ -134,6 +159,44 @@ public class create_entry extends AppCompatActivity {
             case R.id.action_settings:
                 // User chose the "Settings" item, show the app settings UI...
                 Toast.makeText(this, "Nothing happened!", Toast.LENGTH_SHORT).show();
+                String dest = getDatabasePath("user.db").getAbsolutePath();
+                Log.v(TAG, dest);
+
+                return true;
+            case R.id.action_create_template:
+                // User chose the "Settings" item, show the app settings UI...
+                EditText editText = (EditText) findViewById(R.id.txtEntry);
+                String content = editText.getText().toString();
+
+
+                //ask for template title
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                final EditText edittext = new EditText(create_entry.this);
+                alert.setMessage("Enter template title");
+                alert.setTitle("Create template");
+                alert.setView(edittext);
+                alert.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String title = edittext.getText().toString();
+                        if(title.isEmpty()){
+                            title = "Template " + String.valueOf(temps.size());
+                        }
+
+                            //Toast.makeText(create_entry.this, YouEditTextValue, Toast.LENGTH_SHORT).show();
+                        Template entry = new Template(title,content);
+                        mTemplateViewModel.insert(entry);
+                        Toast.makeText(create_entry.this, "Saved as template!", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // what ever you want to do with No option.
+                    }
+                });
+
+                alert.show();
 
                 return true;
 
@@ -141,11 +204,39 @@ public class create_entry extends AppCompatActivity {
                 // User chose the "Settings" item, show the app settings UI...
                 //Toast.makeText(this, "Templates showing!", Toast.LENGTH_SHORT).show();
 
+
+
+/*
+                mTemplateViewModel.getAllTemps().observe(this, new Observer<String>() {
+                    @Override
+                    public void onChanged(@Nullable String s) {
+                        textView.setText(s);
+                    }
+                });
+
+ */
+            //    mTemplateViewModel.getAllTemps().observe(this, words -> {
+                    // Update the cached copy of the words in the adapter.
+              //  });
+
+
+               // List<Template> list2 =  mTemplateViewModel.getAllTemps().getValue();
+              ;
+               // Toast.makeText(this,   list2.get(0).getContent(), Toast.LENGTH_SHORT).show();
+
                 // setup the alert builder
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Choose a template");
                 // add a list
-                String[] list = {"Normal", "Numbered list"};
+                //String[] list = {"Normal", "Numbered list"};
+                String[] list = new String[temps.size()];
+
+                for (int i=0; i<temps.size(); i++){
+                    list[i] = temps.get(i).getTitle();
+                }
+
+               // list = list2.toArray(list);
+
                 builder.setItems(list, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

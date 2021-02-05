@@ -12,7 +12,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.applandeo.materialcalendarview.CalendarView;
 import com.example.journal22.R;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class DashboardFragment extends Fragment {
 
@@ -24,6 +29,9 @@ public class DashboardFragment extends Fragment {
                 new ViewModelProvider(this).get(DashboardViewModel.class);
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
+      //  List<Calendar> calendars = new ArrayList<>();
+       // CalendarView mCalendarView = root.findViewById(R.id.mCalendarView)
+        //mCalendarView.setHighlightedDays(calendars);
         return root;
     }
 }
