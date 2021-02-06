@@ -1,14 +1,14 @@
-package com.example.journal22.ui.home;
+package com.example.journal22.ui.entries;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class EntriesViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public EntriesViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is home fragment");
     }

@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
         setSupportActionBar(myToolbar);
         myToolbar.showOverflowMenu();
         getSupportActionBar().setTitle("title");
-
+/*
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -117,6 +117,10 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
        NavigationUI.setupWithNavController(navView, navController);
+
+*/
+
+
 /*
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);

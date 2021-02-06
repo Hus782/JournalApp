@@ -14,7 +14,7 @@
         android:background="@color/purple_500"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ToolbarTheme"
-        app:layout_constraintBottom_toTopOf="@+id/nav_host_fragment"
+        app:layout_constraintBottom_toTopOf="@+id/main_nav_host_fragment"
         app:layout_constraintEnd_toEndOf="parent"
 
         app:layout_constraintStart_toStartOf="parent"
