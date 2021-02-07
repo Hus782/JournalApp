@@ -141,7 +141,7 @@ public class EntriesFragment extends Fragment {
 
         recyclerView.setAdapter(adapter);
 
-        mWordViewModel = new ViewModelProvider(this).get((EntryViewModel.class));
+        mWordViewModel = new ViewModelProvider(requireActivity()).get((EntryViewModel.class));
 
 
         mWordViewModel.getAllWords().observe(getViewLifecycleOwner(), words -> {

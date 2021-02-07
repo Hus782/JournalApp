@@ -8,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.journal22.data.Entry;
+import com.example.journal22.data.EntryViewModel;
 import com.example.journal22.data.Template;
 import com.example.journal22.data.TemplateViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -68,7 +72,6 @@ public class new_entry extends Fragment {
                         EditText editText2 = (EditText) root.findViewById(R.id.txtTitle);
                         String title = editText2.getText().toString();
                         Log.v("TAG", content);
-                        Toast.makeText(getContext(), "Entry Added", Toast.LENGTH_SHORT).show();
 
 
                         Date c = Calendar.getInstance().getTime();
@@ -78,18 +81,15 @@ public class new_entry extends Fragment {
                         String formattedDate = df.format(c);
                         Log.v("TAG",formattedDate);
 
-                        //Intent intent = new Intent(create_entry.this, MainActivity.class);
-                        Bundle extras = new Bundle();
-                        extras.putString("EXTRA_TITLE",title);
-                        extras.putString("EXTRA_CONTENT",content);
-                        extras.putString("EXTRA_DATE",formattedDate);
+                        // create shared ViewModel to insert safely
+                        EntryViewModel mWordViewModel = new ViewModelProvider(requireActivity()).get((EntryViewModel.class));
+                        Entry word = new Entry(title,content,formattedDate);
+                        mWordViewModel.insert(word);
 
-                    //    intent.putExtras(extras);
-                     //   setResult(RESULT_OK, intent);
-                        Log.v("TAG", "send ok");
+                        Toast.makeText(getContext(), "Entry Added", Toast.LENGTH_SHORT).show();
 
-                      //  finish();
-
+                        // navigate back to main fragment
+                        Navigation.findNavController(view).navigate(R.id.action_new_entry_to_main_fragment);
                     }
                 });
         return root;

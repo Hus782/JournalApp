@@ -39,6 +39,10 @@
         android:id="@+id/new_entry"
         android:name="com.example.journal22.new_entry"
         android:label="new_entry_fragment"
-        tools:layout="@layout/new_entry_fragment" />
+        tools:layout="@layout/new_entry_fragment" >
+        <action
+            android:id="@+id/action_new_entry_to_main_fragment"
+            app:destination="@id/main_fragment" />
+    </fragment>
 
 </navigation>
