@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.example.journal22.ui.entries.EntriesFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_entries" />
+        tools:layout="@layout/fragment_entries" >
+        <action
+            android:id="@+id/action_navigation_home_to_display_entry2"
+            app:destination="@id/display_entry2" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -22,4 +26,8 @@
         android:name="com.example.journal22.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/display_entry2"
+        android:name="com.example.journal22.display_entry"
+        android:label="display_entry" />
 </navigation>

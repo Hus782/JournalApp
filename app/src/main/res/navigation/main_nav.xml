@@ -7,5 +7,38 @@
     <fragment
         android:id="@+id/main_fragment"
         android:name="com.example.journal22.main_fragment"
-        android:label="main_fragment" />
+        android:label="main_fragment" >
+        <action
+            android:id="@+id/action_main_fragment_to_display_entry"
+            app:destination="@id/display_entry" />
+        <action
+            android:id="@+id/action_main_fragment_to_new_entry"
+            app:destination="@id/new_entry" />
+    </fragment>
+    <activity
+        android:id="@+id/calendar_view"
+        android:name="com.example.journal22.calendar_view"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard" />
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.example.journal22.ui.notifications.NotificationsFragment"
+        android:label="fragment_notifications"
+        tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.journal22.ui.entries.EntriesFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_entries" >
+    </fragment>
+    <fragment
+        android:id="@+id/display_entry"
+        android:name="com.example.journal22.display_entry"
+        android:label="display_entry" />
+    <fragment
+        android:id="@+id/new_entry"
+        android:name="com.example.journal22.new_entry"
+        android:label="new_entry_fragment"
+        tools:layout="@layout/new_entry_fragment" />
+
 </navigation>

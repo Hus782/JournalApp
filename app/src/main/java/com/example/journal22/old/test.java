@@ -1,7 +1,8 @@
-package com.example.journal22;
+package com.example.journal22.old;
 
 import android.os.Bundle;
 
+import com.example.journal22.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;

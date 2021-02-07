@@ -12,7 +12,7 @@
         >
 
         <activity
-            android:name=".test"
+            android:name=".old.test"
            ></activity>
         <activity android:name=".calendar_view" />
         <activity

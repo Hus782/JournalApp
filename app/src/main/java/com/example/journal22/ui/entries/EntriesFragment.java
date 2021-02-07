@@ -22,6 +22,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -118,8 +120,12 @@ public class EntriesFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-                        Intent intent = new Intent(root.getContext(), create_entry.class);
-                        startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
+                       // Intent intent = new Intent(root.getContext(), create_entry.class);
+                       // startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
+                        // access parent fragment (try to)
+                        NavHostFragment navHostFragment = (NavHostFragment) getParentFragment();
+                        Fragment parent = (Fragment) navHostFragment.getParentFragment();
+                        Navigation.findNavController(parent.getView()).navigate(R.id.action_main_fragment_to_new_entry);
 
                     }
                 });
@@ -167,7 +173,14 @@ public class EntriesFragment extends Fragment {
                 extras.putString("EXTRA_TITLE",title);
                 extras.putString("EXTRA_CONTENT",content);
                 intent.putExtras(extras);
-                startActivity(intent);
+
+                // access parent fragment (try to)
+                NavHostFragment navHostFragment = (NavHostFragment) getParentFragment();
+                Fragment parent = (Fragment) navHostFragment.getParentFragment();
+                //parent.getView().findViewById(R.id.element_id);
+
+                Navigation.findNavController(parent.getView()).navigate(R.id.action_main_fragment_to_display_entry, extras);
+                //startActivity(intent);
             }
 
             @Override
@@ -258,7 +271,7 @@ public class EntriesFragment extends Fragment {
         }*/
     }
 
-
+/*
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.my_menu, menu) ;
@@ -286,6 +299,8 @@ public class EntriesFragment extends Fragment {
 
         }
     }
+
+*/
 
 }
 

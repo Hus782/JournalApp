@@ -1,4 +1,4 @@
-package com.example.journal22;
+package com.example.journal22.old;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.journal22.R;
 
 import java.util.List;
 

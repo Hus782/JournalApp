@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -107,6 +108,13 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
         setSupportActionBar(myToolbar);
         myToolbar.showOverflowMenu();
         getSupportActionBar().setTitle("title");
+
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.main_fragment).build();
+        NavController navController = Navigation.findNavController(this, R.id.main_nav_host_fragment);
+
+        NavigationUI.setupWithNavController(
+                myToolbar, navController, appBarConfiguration);
 /*
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -314,5 +322,35 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
         //   }
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.my_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.action_settings:
+                // User chose the "Settings" item, show the app settings UI...
+                Toast.makeText(this, "Nothing happened!", Toast.LENGTH_SHORT).show();
+
+                return true;
+            case R.id.action_template:
+                // User chose the "Settings" item, show the app settings UI...
+                Toast.makeText(this, "Templates showing!", Toast.LENGTH_SHORT).show();
+
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 }
