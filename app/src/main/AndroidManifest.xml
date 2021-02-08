@@ -14,14 +14,14 @@
         <activity
             android:name=".old.test"
            ></activity>
-        <activity android:name=".calendar_view" />
+        <activity android:name=".old.calendar_view" />
         <activity
-            android:name=".show_entry"
+            android:name=".old.show_entry"
             android:parentActivityName=".MainActivity">
 
         </activity>
         <activity
-            android:name=".create_entry"
+            android:name=".old.create_entry"
             android:parentActivityName=".MainActivity"
             >
         </activity>

@@ -340,12 +340,13 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
                 Toast.makeText(this, "Nothing happened!", Toast.LENGTH_SHORT).show();
 
                 return true;
+     /*
             case R.id.action_template:
                 // User chose the "Settings" item, show the app settings UI...
                 Toast.makeText(this, "Templates showing!", Toast.LENGTH_SHORT).show();
 
                 return true;
-
+*/
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.

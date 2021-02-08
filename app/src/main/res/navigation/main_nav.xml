@@ -14,10 +14,13 @@
         <action
             android:id="@+id/action_main_fragment_to_new_entry"
             app:destination="@id/new_entry" />
+        <action
+            android:id="@+id/action_main_fragment_to_template_manager"
+            app:destination="@id/template_manager" />
     </fragment>
     <activity
         android:id="@+id/calendar_view"
-        android:name="com.example.journal22.calendar_view"
+        android:name="com.example.journal22.old.calendar_view"
         android:label="fragment_dashboard"
         tools:layout="@layout/fragment_dashboard" />
     <fragment
@@ -44,5 +47,10 @@
             android:id="@+id/action_new_entry_to_main_fragment"
             app:destination="@id/main_fragment" />
     </fragment>
+    <fragment
+        android:id="@+id/template_manager"
+        android:name="com.example.journal22.ui.templates.template_manager"
+        android:label="template_manager_fragment"
+        tools:layout="@layout/template_manager_fragment" />
 
 </navigation>

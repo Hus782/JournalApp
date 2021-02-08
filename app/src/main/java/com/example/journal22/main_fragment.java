@@ -36,6 +36,7 @@ public class main_fragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.main_fragment_fragment, container, false);
+        setHasOptionsMenu(true);
 
 
         return root;
@@ -71,6 +72,32 @@ public class main_fragment extends Fragment {
 
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.my_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+
+
+            case R.id.action_template_manager:
+                // User chose the "Settings" item, show the app settings UI...
+                Toast.makeText(getContext(), "Templates showing!", Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(getView()).navigate(R.id.action_main_fragment_to_template_manager);
+
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
 
 }

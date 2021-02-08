@@ -1,6 +1,5 @@
-package com.example.journal22;
+package com.example.journal22.old;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,18 +14,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.journal22.data.Entry;
-import com.example.journal22.data.EntryViewModel;
+import com.example.journal22.MainActivity;
+import com.example.journal22.R;
 import com.example.journal22.data.Template;
 import com.example.journal22.data.TemplateViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import android.text.format.DateFormat;
 
 import java.util.Calendar;
 import java.util.Date;

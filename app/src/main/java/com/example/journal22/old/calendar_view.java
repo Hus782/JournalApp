@@ -1,4 +1,4 @@
-package com.example.journal22;
+package com.example.journal22.old;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
+import com.example.journal22.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;

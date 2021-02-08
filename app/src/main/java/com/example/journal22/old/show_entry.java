@@ -1,4 +1,4 @@
-package com.example.journal22;
+package com.example.journal22.old;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +7,8 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.example.journal22.R;
 
 public class show_entry extends AppCompatActivity {
     private TextView txtEntry, txtTitle;

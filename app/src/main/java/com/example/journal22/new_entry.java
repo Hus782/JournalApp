@@ -1,7 +1,9 @@
 package com.example.journal22;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -13,6 +15,9 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -22,6 +27,7 @@ import com.example.journal22.data.Entry;
 import com.example.journal22.data.EntryViewModel;
 import com.example.journal22.data.Template;
 import com.example.journal22.data.TemplateViewModel;
+import com.example.journal22.old.create_entry;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
@@ -50,15 +56,9 @@ public class new_entry extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.new_entry_fragment, container, false);
 
+        setHasOptionsMenu(true);
 
-        mTemplateViewModel = new ViewModelProvider(this).get((TemplateViewModel.class));
 
-
-        mTemplateViewModel.getAllTemps().observe(getViewLifecycleOwner(), words -> {
-
-            temps=words;
-
-        });
 
         //save entry FAB
         mAddFab = root.findViewById(R.id.save_entry_btn);
@@ -102,6 +102,109 @@ public class new_entry extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(NewEntryViewModel.class);
         // TODO: Use the ViewModel
+
+        mTemplateViewModel = new ViewModelProvider(this).get((TemplateViewModel.class));
+
+
+        mTemplateViewModel.getAllTemps().observe(getViewLifecycleOwner(), words -> {
+
+            temps=words;
+
+        });
     }
 
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.create_entry_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.action_settings:
+                // User chose the "Settings" item, show the app settings UI...
+                Toast.makeText(getContext(), "Nothing happened!", Toast.LENGTH_SHORT).show();
+
+
+                return true;
+            case R.id.action_create_template:
+                // User chose the "Settings" item, show the app settings UI...
+                EditText editText = (EditText) getView().findViewById(R.id.txtEntry);
+                String content = editText.getText().toString();
+
+
+                //ask for template title
+                AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+                final EditText edittext = new EditText(getContext());
+                alert.setMessage("Enter template title");
+                alert.setTitle("Create template");
+                alert.setView(edittext);
+                alert.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String title = edittext.getText().toString();
+                        if(title.isEmpty()){
+                            title = "Template " + String.valueOf(temps.size());
+                        }
+
+                        //Toast.makeText(create_entry.this, YouEditTextValue, Toast.LENGTH_SHORT).show();
+                        Template entry = new Template(title,content);
+                        mTemplateViewModel.insert(entry);
+                        Toast.makeText(getContext(), "Saved as template!", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // what ever you want to do with No option.
+                    }
+                });
+
+                alert.show();
+
+                return true;
+
+            case R.id.action_template:
+                // setup the alert builder
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Choose a template");
+                // add a list
+                //String[] list = {"Normal", "Numbered list"};
+                String[] list = new String[temps.size()];
+
+                for (int i=0; i<temps.size(); i++){
+                    list[i] = temps.get(i).getTitle();
+                }
+
+                builder.setItems(list, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+
+                            case 1:
+                                EditText editText = (EditText) getView().findViewById(R.id.txtEntry);
+                                editText.setText(NumberedTemplate);
+
+                        }
+                    }
+                });
+                // create and show the alert dialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
 }

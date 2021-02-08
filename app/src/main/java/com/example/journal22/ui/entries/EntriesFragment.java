@@ -7,9 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +27,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.journal22.EntryListAdapter;
 import com.example.journal22.MainActivity;
 import com.example.journal22.R;
-import com.example.journal22.create_entry;
+import com.example.journal22.old.create_entry;
 import com.example.journal22.data.Entry;
 import com.example.journal22.data.EntryViewModel;
-import com.example.journal22.show_entry;
+import com.example.journal22.old.show_entry;
 
 import static android.app.Activity.RESULT_OK;
 
