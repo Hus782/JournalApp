@@ -23,6 +23,8 @@ public class EntryViewModel extends AndroidViewModel {
     public void insert(Entry entry) { mRepository.insert(entry); }
    // public void delete(Entry entry) { mRepository.delete(entry); }
     public void deleteWord(Entry entry) {mRepository.deleteWord(entry);}
+    public void updateEntry(Entry entry) {mRepository.updateWord(entry);}
+
     public Entry getEntry(int position) {return mRepository.getWordAtPosition(position);}
 
 

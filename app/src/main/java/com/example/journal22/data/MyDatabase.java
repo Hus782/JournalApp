@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 
 @Database(entities = {Entry.class, Template.class}, version = 2,  exportSchema = false)
 public abstract class MyDatabase extends RoomDatabase {
-        public abstract MyDao myDao();
+        public abstract EntryDao myDao();
     public abstract TemplateDao templateDao();
 
     private static volatile MyDatabase INSTANCE;
@@ -57,7 +57,7 @@ public abstract class MyDatabase extends RoomDatabase {
             databaseWriteExecutor.execute(() -> {
                 // Populate the database in the background.
                 // If you want to start with more words, just add them.
-                MyDao dao = INSTANCE.myDao();
+                EntryDao dao = INSTANCE.myDao();
               //  TemplateDao tempDao = INSTANCE.templateDao();
 
                 Entry entry = new Entry("Just Testin","Just Testin","2020/5/5");

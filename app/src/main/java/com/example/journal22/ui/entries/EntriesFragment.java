@@ -34,50 +34,7 @@ import com.example.journal22.old.show_entry;
 
 import static android.app.Activity.RESULT_OK;
 
-class RecyclerTouchListener implements RecyclerView.OnItemTouchListener{
 
-    private MainActivity.ClickListener clicklistener;
-    private GestureDetector gestureDetector;
-
-    public RecyclerTouchListener(Context context, final RecyclerView recycleView, final MainActivity.ClickListener clicklistener){
-
-        this.clicklistener=clicklistener;
-        gestureDetector=new GestureDetector(context,new GestureDetector.SimpleOnGestureListener(){
-            @Override
-            public boolean onSingleTapUp(MotionEvent e) {
-                return true;
-            }
-
-            @Override
-            public void onLongPress(MotionEvent e) {
-                View child=recycleView.findChildViewUnder(e.getX(),e.getY());
-                if(child!=null && clicklistener!=null){
-                    clicklistener.onLongClick(child,recycleView.getChildAdapterPosition(child));
-                }
-            }
-        });
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-        View child=rv.findChildViewUnder(e.getX(),e.getY());
-        if(child!=null && clicklistener!=null && gestureDetector.onTouchEvent(e)){
-            clicklistener.onClick(child,rv.getChildAdapterPosition(child));
-        }
-
-        return false;
-    }
-
-    @Override
-    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-    }
-
-    @Override
-    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-    }
-}
 
 public class EntriesFragment extends Fragment {
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
@@ -156,20 +113,27 @@ public class EntriesFragment extends Fragment {
                         Toast.LENGTH_SHORT).show();
 
                 Entry entry = mWordViewModel.getEntry(position);
-
+                int id = entry.getId();
+                String date = entry.getDate();
                 TextView editText = view.findViewById(R.id.txtContent);
                 String content = editText.getText().toString();
                 TextView editText2 = view.findViewById(R.id.txtName);
                 String title = editText2.getText().toString();
+
+                Log.v(TAG, String.valueOf(id) );
+
                 Log.v(TAG, content);
                 Log.v(TAG, title);
                 //Log.v(TAG, "single clicked mateeeeeeeeeeeeeeeeeeeee");
 
-                Intent intent = new Intent(root.getContext(), show_entry.class);
+                //Intent intent = new Intent(root.getContext(), show_entry.class);
                 Bundle extras = new Bundle();
+                extras.putString("EXTRA_ID",String.valueOf(id));
                 extras.putString("EXTRA_TITLE",title);
                 extras.putString("EXTRA_CONTENT",content);
-                intent.putExtras(extras);
+                extras.putString("EXTRA_DATE",date);
+
+                //intent.putExtras(extras);
 
                 // access parent fragment (try to)
                 NavHostFragment navHostFragment = (NavHostFragment) getParentFragment();
@@ -201,6 +165,22 @@ public class EntriesFragment extends Fragment {
                             Toast.makeText(root.getContext(), "Nothing happened!", Toast.LENGTH_SHORT).show();
                             return true;
 
+                        case R.id.menu_update:
+
+                            Entry myWord = mWordViewModel.getEntry(position);
+                            int id = myWord.getId();
+                            String title = "Updated title";
+                            String content = myWord.getContent();
+                            String date = myWord.getDate();
+                            Entry entry = new Entry(id,title,content,date);
+
+                            //Log.v("Got content mate", myWord.getContent());
+                            mWordViewModel.updateEntry(entry);
+                            Toast.makeText(root.getContext(), "Updated (probably)", Toast.LENGTH_SHORT).show();
+
+
+
+                            return true;
                         default:
                             return false;
                     }

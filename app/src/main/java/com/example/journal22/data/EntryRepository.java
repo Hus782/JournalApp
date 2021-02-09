@@ -3,17 +3,14 @@ package com.example.journal22.data;
 import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
-
-import com.example.journal22.MainActivity;
 
 import java.util.List;
 
 public class EntryRepository {
 
-    private MyDao mEntryDao;
+    private EntryDao mEntryDao;
     private LiveData<List<Entry>> mAllEntries;
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
@@ -40,6 +37,12 @@ public class EntryRepository {
         });
     }
 
+    void update(Entry entry) {
+        MyDatabase.databaseWriteExecutor.execute(() -> {
+            mEntryDao.insertEntry(entry);
+        });
+    }
+
     void delete(Entry entry) {
         MyDatabase.databaseWriteExecutor.execute(() -> {
             mEntryDao.deleteEntry(entry);
@@ -56,19 +59,40 @@ public class EntryRepository {
         Log.v("TAG", "Called del here");
 
     }
+
+
+    public void updateWord(Entry word)  {
+        new updateWordAsyncTask(mEntryDao).execute(word);
+        Log.v("TAG", "Called del here");
+
+    }
     /**
      *  Delete a single word from the database.
      */
     private static class deleteWordAsyncTask extends AsyncTask<Entry, Void, Void> {
-        private MyDao mAsyncTaskDao;
+        private EntryDao mAsyncTaskDao;
 
-        deleteWordAsyncTask(MyDao dao) {
+        deleteWordAsyncTask(EntryDao dao) {
             mAsyncTaskDao = dao;
         }
 
         @Override
         protected Void doInBackground(final Entry... params) {
             mAsyncTaskDao.deleteEntry(params[0]);
+            return null;
+        }
+    }
+
+    private static class updateWordAsyncTask extends AsyncTask<Entry, Void, Void> {
+        private EntryDao mAsyncTaskDao;
+
+        updateWordAsyncTask(EntryDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Entry... params) {
+            mAsyncTaskDao.UpdateEntry(params[0]);
             return null;
         }
     }

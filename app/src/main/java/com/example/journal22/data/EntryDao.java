@@ -6,11 +6,12 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
 @Dao
-public interface MyDao {
+public interface EntryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertEntry(Entry entry);
 
@@ -19,6 +20,9 @@ public interface MyDao {
 
     @Delete
     void deleteEntry(Entry entry);
+
+    @Update
+    void UpdateEntry(Entry entry);
 
     @Query("SELECT * from ENTRIES LIMIT 1")
     Entry[] getAnyEntry();
