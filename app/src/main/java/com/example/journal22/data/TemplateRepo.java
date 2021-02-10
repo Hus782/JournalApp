@@ -35,6 +35,10 @@ public class TemplateRepo {
             mTempDao.insertTemplate(template);
         });
     }
+    public Template getTemplateAtPosition (int position) {
+        return mAllTemplates.getValue().get(position);
+    }
+
 /*
     void delete(Entry entry) {
         MyDatabase.databaseWriteExecutor.execute(() -> {

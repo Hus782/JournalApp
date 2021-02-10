@@ -1,5 +1,6 @@
 package com.example.journal22.ui.entries;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -21,6 +22,11 @@ import com.example.journal22.R;
 import com.example.journal22.data.Entry;
 import com.example.journal22.data.EntryViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import static android.content.ContentValues.TAG;
 
@@ -44,12 +50,31 @@ public class EditEntry extends Fragment {
 
         String title = getArguments().getString("EXTRA_TITLE");
         String content = getArguments().getString("EXTRA_CONTENT");
+        String date = getArguments().getString("EXTRA_DATE");
+
         txtEntry.setText(content);
         txtTitle.setText(title);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(changeDateFormat(date));
 
         return root;
     }
+    public String changeDateFormat(String date){
+        SimpleDateFormat format = new SimpleDateFormat("dd-MMMM-yyyy-EEEE-HH:mm", Locale.getDefault());
+        Date mydate;
+        try {
+            mydate = format.parse(date);
 
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "day";
+
+        }
+        String WeekDay = new SimpleDateFormat("EEE, MMMM dd, yyyy", Locale.getDefault()).format(mydate);
+        return WeekDay;
+
+
+    }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

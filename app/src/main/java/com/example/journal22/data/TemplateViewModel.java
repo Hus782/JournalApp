@@ -23,6 +23,6 @@ public class TemplateViewModel extends AndroidViewModel {
     public void insert(Template template) { mRepository.insert(template); }
     // public void delete(Entry entry) { mRepository.delete(entry); }
   //  public void deleteWord(Template entry) {mRepository.deleteWord(entry);}
-    //public Template getEntry(int position) {return mRepository.getWordAtPosition(position);}
+    public Template getTemplate(int position) {return mRepository.getTemplateAtPosition(position);}
 
 }

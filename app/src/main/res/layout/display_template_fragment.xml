@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".display_entry">
-
+    tools:context=".ui.templates.display_template">
 
     <TextView
-        android:id="@+id/txtEntry"
+        android:id="@+id/txtBody"
         android:layout_width="376dp"
         android:layout_height="593dp"
         android:ems="10"
@@ -46,7 +45,5 @@
         android:src="@drawable/outline_settings_black_48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

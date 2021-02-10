@@ -81,11 +81,22 @@ public class template_manager extends Fragment {
             @Override
             public void onClick(View view, final int position) {
                 //Values are passing to activity & to fragment as well
-                Toast.makeText(getContext(), "Single Click on position        :" + position,
+                Toast.makeText(getContext(), "Single Click on position:  " + position,
                         Toast.LENGTH_SHORT).show();
 
+                Template temp = mTemplateViewModel.getTemplate(position);
+                int id = temp.getId();
+                String title = temp.getTitle();
+                String content = temp.getContent();
 
-               // Navigation.findNavController(parent.getView()).navigate(R.id.action_main_fragment_to_display_entry, extras);
+                //Intent intent = new Intent(root.getContext(), show_entry.class);
+                Bundle extras = new Bundle();
+                extras.putString("EXTRA_ID",String.valueOf(id));
+                extras.putString("EXTRA_TITLE",title);
+                extras.putString("EXTRA_CONTENT",content);
+
+                // access parent fragment (try to)
+                Navigation.findNavController(getView()).navigate(R.id.action_template_manager_to_display_template, extras);
                 //startActivity(intent);
             }
             @Override

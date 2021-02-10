@@ -55,7 +55,11 @@
         android:id="@+id/template_manager"
         android:name="com.example.journal22.ui.templates.template_manager"
         android:label="template_manager_fragment"
-        tools:layout="@layout/template_manager_fragment" />
+        tools:layout="@layout/template_manager_fragment" >
+        <action
+            android:id="@+id/action_template_manager_to_display_template"
+            app:destination="@id/display_template" />
+    </fragment>
     <fragment
         android:id="@+id/editEntry"
         android:name="com.example.journal22.ui.entries.EditEntry"
@@ -64,6 +68,15 @@
         <action
             android:id="@+id/action_editEntry_to_main_fragment"
             app:destination="@id/main_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/display_template"
+        android:name="com.example.journal22.ui.templates.display_template"
+        android:label="display_template_fragment"
+        tools:layout="@layout/display_template_fragment" >
+        <action
+            android:id="@+id/action_display_template_to_new_entry"
+            app:destination="@id/new_entry" />
     </fragment>
 
 </navigation>

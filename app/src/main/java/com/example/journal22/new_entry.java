@@ -30,6 +30,7 @@ import com.example.journal22.data.TemplateViewModel;
 import com.example.journal22.old.create_entry;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -59,7 +60,16 @@ public class new_entry extends Fragment {
         setHasOptionsMenu(true);
 
 
+        EditText entry = root.findViewById(R.id.txtEntry);
+        try{
+            String body = getArguments().getString("EXTRA_CONTENT");
+            if(!body.isEmpty()){
+                entry.setText(body);
+            }
+        }
+        catch (Exception ignored){
 
+        }
         //save entry FAB
         mAddFab = root.findViewById(R.id.save_entry_btn);
 
