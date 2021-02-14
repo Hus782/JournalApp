@@ -9,11 +9,7 @@
         android:id="@+id/navigation_home"
         android:name="com.example.journal22.ui.entries.EntriesFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_entries" >
-        <action
-            android:id="@+id/action_navigation_home_to_display_entry2"
-            app:destination="@id/display_entry2" />
-    </fragment>
+        tools:layout="@layout/fragment_entries" />
 
     <fragment
         android:id="@+id/navigation_dashboard"

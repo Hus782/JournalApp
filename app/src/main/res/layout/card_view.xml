@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="105dp"
         android:id="@+id/cardView"
-        android:layout_marginBottom="8dp"
+
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="57dp"
         card_view:cardElevation="4dp"
@@ -18,7 +18,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="105dp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="@+id/cardView"
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical"

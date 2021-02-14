@@ -20,12 +20,14 @@ public class EntryViewModel extends AndroidViewModel {
 
     public LiveData<List<Entry>> getAllWords() { return mAllEntries; }
 
-    public void insert(Entry entry) { mRepository.insert(entry); }
+    public void insert(Entry entry) { mRepository.insertWord(entry); }
    // public void delete(Entry entry) { mRepository.delete(entry); }
     public void deleteWord(Entry entry) {mRepository.deleteWord(entry);}
     public void updateEntry(Entry entry) {mRepository.updateWord(entry);}
 
     public Entry getEntry(int position) {return mRepository.getWordAtPosition(position);}
 
-
+    public LiveData<List<Entry>> getFilteredEntries(String searchText){
+        return mRepository.getFilteredEntries(searchText);
+    }
 }

@@ -39,6 +39,48 @@ public class TemplateRepo {
         return mAllTemplates.getValue().get(position);
     }
 
+
+
+    public void deleteWord(Template word)  {
+        new TemplateRepo.deleteTempAsyncTask(mTempDao).execute(word);
+        Log.v("TAG", "Called del here");
+
+    }
+
+
+    public void updateWord(Template word)  {
+        new TemplateRepo.updateTempAsyncTask(mTempDao).execute(word);
+        Log.v("TAG", "Called del here");
+
+    }
+
+    private static class deleteTempAsyncTask extends AsyncTask<Template, Void, Void> {
+        private TemplateDao mAsyncTaskDao;
+
+        deleteTempAsyncTask(TemplateDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Template... params) {
+            mAsyncTaskDao.deleteTemplate(params[0]);
+            return null;
+        }
+    }
+
+    private static class updateTempAsyncTask extends AsyncTask<Template, Void, Void> {
+        private TemplateDao mAsyncTaskDao;
+
+        updateTempAsyncTask(TemplateDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Template... params) {
+            mAsyncTaskDao.UpdateTemplate(params[0]);
+            return null;
+        }
+    }
 /*
     void delete(Entry entry) {
         MyDatabase.databaseWriteExecutor.execute(() -> {

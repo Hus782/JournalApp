@@ -53,6 +53,16 @@ public class EntryRepository {
         return mAllEntries.getValue().get(position);
     }
 
+    public LiveData<List<Entry>> getFilteredEntries(String searchText){
+        return mEntryDao.getDealsList(searchText);
+    }
+
+
+    public void insertWord(Entry word)  {
+        new insertEntryAsyncTask(mEntryDao).execute(word);
+        Log.v("TAG", "Called del here");
+
+    }
 
     public void deleteWord(Entry word)  {
         new deleteWordAsyncTask(mEntryDao).execute(word);
@@ -66,6 +76,25 @@ public class EntryRepository {
         Log.v("TAG", "Called del here");
 
     }
+
+
+    private static class insertEntryAsyncTask extends AsyncTask<Entry, Void, Void> {
+        private EntryDao mAsyncTaskDao;
+
+        insertEntryAsyncTask(EntryDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Entry... params) {
+            mAsyncTaskDao.insertEntry(params[0]);
+            return null;
+        }
+    }
+
+
+
+
     /**
      *  Delete a single word from the database.
      */

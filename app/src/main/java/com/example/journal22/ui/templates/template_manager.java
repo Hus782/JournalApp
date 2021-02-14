@@ -1,7 +1,10 @@
 package com.example.journal22.ui.templates;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -113,7 +116,7 @@ public class template_manager extends Fragment {
                     //return true;
                     switch (item.getItemId()) {
                         case R.id.menu_delete:
-                           // setDialog(getContext(),position);
+                            setDialog(getContext(),position);
 
                             return true;
                         case R.id.menu_nothing:
@@ -131,6 +134,32 @@ public class template_manager extends Fragment {
          }));
 
 
+
+    }
+
+    public void setDialog(Context context, int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Are you sure mate?");
+
+        // Add the buttons
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+                Template myWord = mTemplateViewModel.getTemplate(position);
+                //Log.v("Got content mate", myWord.getContent());
+                mTemplateViewModel.deleteTemplate(myWord);
+                Toast.makeText(context, "Item deleted!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
     }
 

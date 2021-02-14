@@ -125,7 +125,7 @@ public class EntryListAdapter extends ListAdapter<Entry, EntryListAdapter.EntryV
 
         static EntryViewHolder create(ViewGroup parent) {
             View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.card_view, parent, false);
+                    .inflate(R.layout.entry_row, parent, false);
             return new EntryViewHolder(view);
         }
 /*

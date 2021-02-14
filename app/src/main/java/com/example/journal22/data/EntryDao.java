@@ -27,5 +27,7 @@ public interface EntryDao {
     @Query("SELECT * from ENTRIES LIMIT 1")
     Entry[] getAnyEntry();
 
+    @Query("SELECT * FROM ENTRIES WHERE content LIKE :searchText")
+    public LiveData<List<Entry>> getDealsList(String searchText);
 
 }

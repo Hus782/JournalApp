@@ -3,15 +3,20 @@ package com.example.journal22.ui.entries;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +26,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,6 +37,11 @@ import com.example.journal22.old.create_entry;
 import com.example.journal22.data.Entry;
 import com.example.journal22.data.EntryViewModel;
 import com.example.journal22.old.show_entry;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -48,6 +59,7 @@ public class EntriesFragment extends Fragment {
     private EntryListAdapter adapter;
     private EntriesViewModel homeViewModel;
     private ImageButton add_btn;
+    private TextView txtUsername, txtTodayDate, txtStreak, txtTotalDays, txtTotalEntries;
     public void start_entry(View view) {
         Intent intent = new Intent(view.getContext(), create_entry.class);
         startActivityForResult(intent,NEW_WORD_ACTIVITY_REQUEST_CODE);
@@ -84,6 +96,15 @@ public class EntriesFragment extends Fragment {
                     }
                 });
 
+        txtTotalEntries = root.findViewById(R.id.txtTotalEntries);
+
+
+        //set today's date
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
+        String formattedDate = df.format(c);
+        txtTodayDate = root.findViewById(R.id.txtTodayDate);
+        txtTodayDate.setText(formattedDate);
 
 
         //entries stuff
@@ -95,12 +116,21 @@ public class EntriesFragment extends Fragment {
 
         recyclerView.setAdapter(adapter);
 
+        DividerItemDecoration itemDecoration = new
+                DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        //itemDecoration.setDrawable(new ColorDrawable(R.color.black));
+
+        recyclerView.addItemDecoration(itemDecoration);
+
         mWordViewModel = new ViewModelProvider(requireActivity()).get((EntryViewModel.class));
 
 
         mWordViewModel.getAllWords().observe(getViewLifecycleOwner(), words -> {
             // Update the cached copy of the words in the adapter.
             adapter.submitList(words);
+            txtTotalEntries.setText(words.size()+" entries");
+           // Toast.makeText(root.getContext(), "THE SIZE OF WORDS IS :"+words.size(),
+                  //  Toast.LENGTH_SHORT).show();
         });
 
 
@@ -141,6 +171,8 @@ public class EntriesFragment extends Fragment {
                 //parent.getView().findViewById(R.id.element_id);
 
                 Navigation.findNavController(parent.getView()).navigate(R.id.action_main_fragment_to_display_entry, extras);
+                //Entry newEntry = new Entry("test","testContent",date);
+                //mWordViewModel.insert(newEntry);
                 //startActivity(intent);
             }
 
@@ -221,7 +253,7 @@ public class EntriesFragment extends Fragment {
 
     }
 
-
+/*
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.v(TAG, "we in main activity");
@@ -246,12 +278,39 @@ public class EntriesFragment extends Fragment {
                     "Oops",
                     Toast.LENGTH_LONG).show();
         }*/
-    }
 
-/*
+
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+
         inflater.inflate(R.menu.my_menu, menu) ;
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                if (s != null) {
+
+                    //Log.v(TAG, mWordViewModel.getFilteredEntries(s).toString());
+
+                }
+
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                //searchReceived(s);
+                //Log.v(TAG, mWordViewModel.getFilteredEntries(s).toString());
+
+                return true;
+            }
+        });
     }
 
     @Override
@@ -277,7 +336,7 @@ public class EntriesFragment extends Fragment {
         }
     }
 
-*/
+
 
 }
 

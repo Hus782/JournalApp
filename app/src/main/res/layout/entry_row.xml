@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="105dp"
     android:orientation="vertical"
-    android:padding="4dp">
+    android:padding="4dp"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/txtName"
@@ -89,4 +90,5 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="20dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

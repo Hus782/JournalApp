@@ -21,8 +21,9 @@ public class TemplateViewModel extends AndroidViewModel {
     public LiveData<List<Template>> getAllTemps() { return mAllTemplates; }
 
     public void insert(Template template) { mRepository.insert(template); }
-    // public void delete(Entry entry) { mRepository.delete(entry); }
-  //  public void deleteWord(Template entry) {mRepository.deleteWord(entry);}
+    public void deleteTemplate(Template template) {mRepository.deleteWord(template);}
+    public void updateTemplate(Template template) {mRepository.updateWord(template);}
+
     public Template getTemplate(int position) {return mRepository.getTemplateAtPosition(position);}
 
 }

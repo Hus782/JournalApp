@@ -16,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.PopupMenu;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -328,11 +329,14 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.my_menu, menu);
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+
         switch (item.getItemId()) {
 
             case R.id.action_settings:
@@ -353,5 +357,8 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
                 return super.onOptionsItemSelected(item);
 
         }
+
+
     }
+
 }
