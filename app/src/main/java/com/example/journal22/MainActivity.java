@@ -1,6 +1,7 @@
 package com.example.journal22;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -21,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -34,6 +37,7 @@ import com.example.journal22.data.Entry;
 import com.example.journal22.data.EntryViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
@@ -56,7 +60,10 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
     private static final String LOG_TAG =
             MainActivity.class.getSimpleName();
 
-
+    DrawerLayout dl;
+    ActionBarDrawerToggle t;
+    NavigationView nv;
+    AppBarConfiguration mAppBarConfiguration;
     public static interface ClickListener {
         public void onClick(View view, int position);
 
@@ -107,15 +114,64 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        myToolbar.showOverflowMenu();
-        getSupportActionBar().setTitle("title");
+        //myToolbar.showOverflowMenu();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.main_fragment).build();
         NavController navController = Navigation.findNavController(this, R.id.main_nav_host_fragment);
-
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(
                 myToolbar, navController, appBarConfiguration);
+
+
+        // drawer stuff
+        dl = (DrawerLayout)findViewById(R.id.drawer_layout);
+        t = new ActionBarDrawerToggle(MainActivity.this, dl,myToolbar,R.string.open, R.string.closed);
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, dl, R.string.open, R.string.closed) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+        };
+
+
+      //  mAppBarConfiguration = new AppBarConfiguration.Builder(
+       //         R.id.main_fragment)
+        //        .setDrawerLayout(dl)
+           //     .build();
+
+
+        dl.addDrawerListener(drawerToggle);
+        t.syncState();
+
+
+
+        nv = (NavigationView)findViewById(R.id.nav_view);
+        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                int id = item.getItemId();
+                switch(id)
+                {
+                    case R.id.item1:
+                        Toast.makeText(MainActivity.this, "My Account",Toast.LENGTH_SHORT).show();break;
+
+                    default:
+                        return true;
+                }
+
+
+                return true;
+
+            }
+        });
 /*
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -325,6 +381,14 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
 
     }
 
+/*
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.main_fragment);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
+    }
+*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -336,6 +400,8 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+       // if(t.onOptionsItemSelected(item))
+         //   return true;
 
         switch (item.getItemId()) {
 
@@ -344,6 +410,10 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
                 Toast.makeText(this, "Nothing happened!", Toast.LENGTH_SHORT).show();
 
                 return true;
+            // Android home
+          //  case android.R.id.home:
+           //     dl.openDrawer(GravityCompat.START);
+            //    return true;
      /*
             case R.id.action_template:
                 // User chose the "Settings" item, show the app settings UI...

@@ -1,5 +1,7 @@
 package com.example.journal22;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -22,10 +24,15 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 
 public class main_fragment extends Fragment {
 
     private MainFragmentViewModel mViewModel;
+    DrawerLayout dl;
+    ActionBarDrawerToggle t;
+    NavigationView nv;
+
 
     public static main_fragment newInstance() {
         return new main_fragment();
@@ -70,6 +77,7 @@ public class main_fragment extends Fragment {
         // TODO: Use the ViewModel
 
 
+
     }
 
     @Override
@@ -81,6 +89,9 @@ public class main_fragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+
+
         switch (item.getItemId()) {
 
 
