@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +56,8 @@ public class display_entry extends Fragment {
         String title = getArguments().getString("EXTRA_TITLE");
         String content = getArguments().getString("EXTRA_CONTENT");
         String date = getArguments().getString("EXTRA_DATE");
+
+        txtEntry.setMovementMethod(new ScrollingMovementMethod());
 
         txtEntry.setText(content);
         txtTitle.setText(title);
@@ -108,7 +111,6 @@ public class display_entry extends Fragment {
         Date mydate;
         try {
             mydate = format.parse(date);
-
 
         } catch (ParseException e) {
             e.printStackTrace();

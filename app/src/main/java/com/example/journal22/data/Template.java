@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "templates")
 public class Template {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private int template_id;
 
     @ColumnInfo(name = "title")
     private String title;
@@ -17,8 +17,8 @@ public class Template {
     private String content;
 
 
-    public Template(int id, String title, String content){
-        this.id = id;
+    public Template(int template_id, String title, String content){
+        this.template_id = template_id;
         this.title = title;
         this.content = content;
     }
@@ -30,7 +30,7 @@ public class Template {
     }
 
 
-    public int getId(){return this.id;}
+    public int getTemplate_id(){return this.template_id;}
     public String getTitle(){return this.title;}
     public String getContent(){return this.content;}
 }

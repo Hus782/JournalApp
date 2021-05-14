@@ -12,10 +12,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Entry.class, Template.class}, version = 2,  exportSchema = false)
+@Database(entities = {Entry.class, Template.class, Journal.class}, version = 2,  exportSchema = false)
 public abstract class MyDatabase extends RoomDatabase {
         public abstract EntryDao myDao();
     public abstract TemplateDao templateDao();
+    public abstract JournalDao journalDao();
 
     private static volatile MyDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
@@ -38,7 +39,8 @@ public abstract class MyDatabase extends RoomDatabase {
                             MyDatabase.class, "entries_database")
                             .addCallback(sRoomDatabaseCallback)
                             //.addMigrations(MIGRATION_1_2)
-                            //.fallbackToDestructiveMigration()
+                            .fallbackToDestructiveMigration()
+//                            .allowMainThreadQueries()
 
                             .build();
                 }
@@ -59,7 +61,10 @@ public abstract class MyDatabase extends RoomDatabase {
                 // If you want to start with more words, just add them.
                 EntryDao dao = INSTANCE.myDao();
               //  TemplateDao tempDao = INSTANCE.templateDao();
+                JournalDao journalDao = INSTANCE.journalDao();
 
+//                Journal journal = new Journal("Journal1");
+//                journalDao.createJournal(journal);
                 Entry entry = new Entry("Just Testin","Just Testin","2020/5/5");
                 dao.insertEntry(entry);
 

@@ -1,6 +1,9 @@
 package com.example.journal22;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -15,6 +18,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,8 +33,8 @@ import com.google.android.material.navigation.NavigationView;
 public class main_fragment extends Fragment {
 
     private MainFragmentViewModel mViewModel;
-    DrawerLayout dl;
-    ActionBarDrawerToggle t;
+    DrawerLayout drawer;
+    ActionBarDrawerToggle toogle;
     NavigationView nv;
 
 
@@ -46,14 +50,15 @@ public class main_fragment extends Fragment {
         setHasOptionsMenu(true);
 
 
+
         return root;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        BottomNavigationView navView = view.findViewById(R.id.nav_view);
+        BottomNavigationView navView = view.findViewById(R.id.bottom_nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
 
@@ -62,6 +67,20 @@ public class main_fragment extends Fragment {
                 .build();
         NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
+        //drawer = getActivity().findViewById(R.id.drawer_layout);
+
+
+        //View view = findViewById(R.id.drawer_layout);
+        // drawer stuff
+        //Toolbar myToolbar = getActivity().findViewById(R.id.my_toolbar);
+
+       // drawer = getActivity().findViewById(R.id.drawer_layout);
+
+
+
+        //toogle = new ActionBarDrawerToggle(getActivity(), drawer,R.string.open, R.string.closed);
+       // drawer.addDrawerListener(toogle);
+        //toogle.syncState();
 
 
     }
@@ -93,7 +112,6 @@ public class main_fragment extends Fragment {
 
 
         switch (item.getItemId()) {
-
 
 
             case R.id.action_template_manager:

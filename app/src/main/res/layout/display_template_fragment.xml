@@ -8,6 +8,8 @@
 
     <TextView
         android:id="@+id/txtBody"
+        android:transitionName="TempBody"
+
         android:layout_width="376dp"
         android:layout_height="593dp"
         android:ems="10"

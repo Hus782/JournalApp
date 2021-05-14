@@ -1,11 +1,11 @@
 package com.example.journal22.data;
 
-import android.util.Log;
-
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.Relation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,7 +15,7 @@ import java.util.Locale;
 @Entity(tableName = "entries")
 public class Entry {
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private int entry_id;
 
     @ColumnInfo(name = "title")
     private String title;
@@ -24,8 +24,10 @@ public class Entry {
     @ColumnInfo(name = "date")
     private String date;
 
-    public Entry(int id, String title, String content, String date){
-        this.id = id;
+
+
+    public Entry(int entry_id, String title, String content, String date){
+        this.entry_id = entry_id;
         this.title = title;
         this.content = content;
         this.date = date;
@@ -37,7 +39,7 @@ public class Entry {
         this.content = content;
         this.date = date;
     }
-    public int getId(){return this.id;}
+    public int getEntry_id(){return this.entry_id;}
     public String getTitle(){return this.title;}
     public String getContent(){return this.content;}
     public String getDate(){return this.date;}

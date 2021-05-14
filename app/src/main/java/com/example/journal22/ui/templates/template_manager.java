@@ -5,34 +5,27 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.TransitionInflater;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.journal22.EntryListAdapter;
 import com.example.journal22.MainActivity;
 import com.example.journal22.R;
-import com.example.journal22.data.Entry;
-import com.example.journal22.data.EntryViewModel;
 import com.example.journal22.data.Template;
 import com.example.journal22.data.TemplateViewModel;
-import com.example.journal22.old.show_entry;
 import com.example.journal22.ui.entries.EntriesViewModel;
 import com.example.journal22.ui.entries.RecyclerTouchListener;
 
@@ -47,6 +40,13 @@ public class template_manager extends Fragment {
 
     public static template_manager newInstance() {
         return new template_manager();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        TransitionInflater inflater = TransitionInflater.from(requireContext());
+        setEnterTransition(inflater.inflateTransition(R.transition.shared_element_transition));
     }
 
     @Override
@@ -88,7 +88,7 @@ public class template_manager extends Fragment {
                         Toast.LENGTH_SHORT).show();
 
                 Template temp = mTemplateViewModel.getTemplate(position);
-                int id = temp.getId();
+                int id = temp.getTemplate_id();
                 String title = temp.getTitle();
                 String content = temp.getContent();
 
@@ -97,6 +97,7 @@ public class template_manager extends Fragment {
                 extras.putString("EXTRA_ID",String.valueOf(id));
                 extras.putString("EXTRA_TITLE",title);
                 extras.putString("EXTRA_CONTENT",content);
+
 
                 // access parent fragment (try to)
                 Navigation.findNavController(getView()).navigate(R.id.action_template_manager_to_display_template, extras);

@@ -4,14 +4,14 @@
         android:id="@+id/group1"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/item1"
+            android:id="@+id/template_manager"
             android:icon="@drawable/ic_home_black_24dp"
-            android:title="title_1"
+            android:title="Templates"
             android:checked="true" />
         <item
-            android:id="@+id/item2"
+            android:id="@+id/new_entry"
             android:icon="@drawable/ic_home_black_24dp"
-            android:title="title_2" />
+            android:title="Create Entry" />
         <item
             android:id="@+id/item3"
             android:icon="@drawable/ic_home_black_24dp"

@@ -3,18 +3,14 @@ package com.example.journal22.ui.entries;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -36,15 +32,12 @@ import com.example.journal22.R;
 import com.example.journal22.old.create_entry;
 import com.example.journal22.data.Entry;
 import com.example.journal22.data.EntryViewModel;
-import com.example.journal22.old.show_entry;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-
-import static android.app.Activity.RESULT_OK;
-
 
 
 public class EntriesFragment extends Fragment {
@@ -58,7 +51,7 @@ public class EntriesFragment extends Fragment {
     private RecyclerView recyclerView;
     private EntryListAdapter adapter;
     private EntriesViewModel homeViewModel;
-    private ImageButton add_btn;
+    private FloatingActionButton add_btn;
     private TextView txtUsername, txtTodayDate, txtStreak, txtTotalDays, txtTotalEntries;
     public void start_entry(View view) {
         Intent intent = new Intent(view.getContext(), create_entry.class);
@@ -91,6 +84,7 @@ public class EntriesFragment extends Fragment {
                         // access parent fragment (try to)
                         NavHostFragment navHostFragment = (NavHostFragment) getParentFragment();
                         Fragment parent = (Fragment) navHostFragment.getParentFragment();
+
                         Navigation.findNavController(parent.getView()).navigate(R.id.action_main_fragment_to_new_entry);
 
                     }
@@ -143,7 +137,7 @@ public class EntriesFragment extends Fragment {
                         Toast.LENGTH_SHORT).show();
 
                 Entry entry = mWordViewModel.getEntry(position);
-                int id = entry.getId();
+                int id = entry.getEntry_id();
                 String date = entry.getDate();
                 TextView editText = view.findViewById(R.id.txtContent);
                 String content = editText.getText().toString();
@@ -169,6 +163,19 @@ public class EntriesFragment extends Fragment {
                 NavHostFragment navHostFragment = (NavHostFragment) getParentFragment();
                 Fragment parent = (Fragment) navHostFragment.getParentFragment();
                 //parent.getView().findViewById(R.id.element_id);
+
+/*
+                FragmentNavigator.Extras extras2 = new FragmentNavigator.Extras.Builder()
+                        .addSharedElement(view, "hero_image")
+                        .build();
+                Navigation.findNavController(parent.getView()).navigate(
+                        R.id.action_main_fragment_to_display_entry,
+                        extras, // Bundle of args
+                        null, // NavOptions
+                        extras2);
+*/
+
+
 
                 Navigation.findNavController(parent.getView()).navigate(R.id.action_main_fragment_to_display_entry, extras);
                 //Entry newEntry = new Entry("test","testContent",date);
@@ -200,7 +207,7 @@ public class EntriesFragment extends Fragment {
                         case R.id.menu_update:
 
                             Entry myWord = mWordViewModel.getEntry(position);
-                            int id = myWord.getId();
+                            int id = myWord.getEntry_id();
                             String title = "Updated title";
                             String content = myWord.getContent();
                             String date = myWord.getDate();

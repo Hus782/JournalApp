@@ -35,7 +35,7 @@ public class TemplateListAdapter extends ListAdapter<Template, TemplateListAdapt
         private TempViewHolder(View itemView) {
             super(itemView);
             txtTitle = itemView.findViewById(R.id.txtTitle);
-            txtEntry = itemView.findViewById(R.id.txtEntry);
+            txtEntry = itemView.findViewById(R.id.txtBody);
 
 
         }
