@@ -1,5 +1,6 @@
 package com.example.journal22.ui.entries;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,9 +27,10 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.journal22.EntryListAdapter;
 import com.example.journal22.MainActivity;
 import com.example.journal22.R;
+import com.example.journal22.data.Journal;
+import com.example.journal22.data.JournalViewModel;
 import com.example.journal22.old.create_entry;
 import com.example.journal22.data.Entry;
 import com.example.journal22.data.EntryViewModel;
@@ -45,7 +47,9 @@ public class EntriesFragment extends Fragment {
     //MyRecyclerViewAdapter adapter;
     private static final String TAG = "MyActivity";
 
-    private EntryViewModel mWordViewModel;
+    private EntryViewModel mEntryViewModel;
+    private JournalViewModel mJournalViewModel;
+
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
     private RecyclerView recyclerView;
@@ -60,6 +64,7 @@ public class EntriesFragment extends Fragment {
     }
 
 
+    @SuppressLint("DefaultLocale")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -116,13 +121,22 @@ public class EntriesFragment extends Fragment {
 
         recyclerView.addItemDecoration(itemDecoration);
 
-        mWordViewModel = new ViewModelProvider(requireActivity()).get((EntryViewModel.class));
+        mEntryViewModel = new ViewModelProvider(requireActivity()).get((EntryViewModel.class));
+        mJournalViewModel= new ViewModelProvider(requireActivity()).get((JournalViewModel.class));
 
+//        Journal journal = new Journal("Journal2");
+//        mJournalViewModel.insert(journal);
+//
+//        mJournalViewModel.getJournalsAndEntries();
+//        Log.v(TAG, "Testing that shiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiit");
+//        Log.v(TAG, mJournalViewModel.getJournalsAndEntries().getValue().get(0).Journal.getTitle());
+       // mEntryViewModel.getAllWords().observe(getViewLifecycleOwner(), entries -> {
+        mJournalViewModel.getJournalsAndEntries().observe(getViewLifecycleOwner(), entries -> {
 
-        mWordViewModel.getAllWords().observe(getViewLifecycleOwner(), words -> {
+            ;
             // Update the cached copy of the words in the adapter.
-            adapter.submitList(words);
-            txtTotalEntries.setText(words.size()+" entries");
+            adapter.submitList(entries.get(0).entries);
+            txtTotalEntries.setText(String.format("%d entries", entries.get(0).entries.size()));
            // Toast.makeText(root.getContext(), "THE SIZE OF WORDS IS :"+words.size(),
                   //  Toast.LENGTH_SHORT).show();
         });
@@ -136,7 +150,7 @@ public class EntriesFragment extends Fragment {
                 Toast.makeText(root.getContext(), "Single Click on position        :"+position,
                         Toast.LENGTH_SHORT).show();
 
-                Entry entry = mWordViewModel.getEntry(position);
+                Entry entry = mEntryViewModel.getEntry(position);
                 int id = entry.getEntry_id();
                 String date = entry.getDate();
                 TextView editText = view.findViewById(R.id.txtContent);
@@ -206,7 +220,7 @@ public class EntriesFragment extends Fragment {
 
                         case R.id.menu_update:
 
-                            Entry myWord = mWordViewModel.getEntry(position);
+                            Entry myWord = mEntryViewModel.getEntry(position);
                             int id = myWord.getEntry_id();
                             String title = "Updated title";
                             String content = myWord.getContent();
@@ -214,7 +228,7 @@ public class EntriesFragment extends Fragment {
                             Entry entry = new Entry(id,title,content,date);
 
                             //Log.v("Got content mate", myWord.getContent());
-                            mWordViewModel.updateEntry(entry);
+                            mEntryViewModel.updateEntry(entry);
                             Toast.makeText(root.getContext(), "Updated (probably)", Toast.LENGTH_SHORT).show();
 
 
@@ -242,9 +256,9 @@ public class EntriesFragment extends Fragment {
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button
-                Entry myWord = mWordViewModel.getEntry(position);
+                Entry myWord = mEntryViewModel.getEntry(position);
                 //Log.v("Got content mate", myWord.getContent());
-                mWordViewModel.deleteWord(myWord);
+                mEntryViewModel.deleteWord(myWord);
                 Toast.makeText(context, "Item deleted!", Toast.LENGTH_SHORT).show();
             }
         });

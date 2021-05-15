@@ -1,51 +1,33 @@
 package com.example.journal22;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.PopupMenu;
-import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.journal22.data.Entry;
 import com.example.journal22.data.EntryViewModel;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.journal22.data.Journal;
+import com.example.journal22.data.JournalViewModel;
+import com.example.journal22.ui.entries.EntryListAdapter;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.ArrayList;
-
-
-
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {//implements EntryListAdapter.ListItemClickListener {
@@ -138,6 +120,33 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
         // Show and Manage the Drawer and Back Icon
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout);
         navView = findViewById(R.id.nav_view);
+        try {
+
+            JournalViewModel viewModel = new ViewModelProvider(this).get(JournalViewModel.class);
+//            Journal journal = new Journal("Journal3");
+//            viewModel.insert(journal);
+            final Menu menu = navView.getMenu();
+            viewModel.getAllJournals().observe(this, item -> {
+                //List<Journal> AllJournals = item;
+                int journSize = item.size();
+                Log.v(TAG, "Testing that shiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiit");
+                Log.v(TAG, String.valueOf(journSize));
+
+
+                for (int i = 0; i < journSize; i++) {
+                   menu.add(item.get(i).getTitle());
+                }
+            });
+
+//            List<Journal> AllJournals = viewModel.getAllJournals().getValue();
+//            int journSize = AllJournals.size();
+//            final Menu menu = navView.getMenu();
+//            for (int i = 1; i <= journSize; i++) {
+//                menu.add(AllJournals.get(i).getTitle());
+//            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Handle Navigation item clicks
         // This works with no further action on your part if the menu and destination id’s match.

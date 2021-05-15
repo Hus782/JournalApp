@@ -1,6 +1,5 @@
-package com.example.journal22;
+package com.example.journal22.ui.entries;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +10,8 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.journal22.R;
 import com.example.journal22.data.Entry;
-
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 
 /*

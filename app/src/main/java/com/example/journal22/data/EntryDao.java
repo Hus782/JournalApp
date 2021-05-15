@@ -10,6 +10,8 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import io.reactivex.Completable;
+
 @Dao
 public interface EntryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -30,4 +32,7 @@ public interface EntryDao {
     @Query("SELECT * FROM ENTRIES WHERE content LIKE :searchText")
     public LiveData<List<Entry>> getDealsList(String searchText);
 
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Completable insertEntryRX(Entry entry);
 }

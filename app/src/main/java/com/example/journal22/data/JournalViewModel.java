@@ -22,8 +22,8 @@ public class JournalViewModel extends AndroidViewModel {
     public LiveData<List<JournalAndEntries>> getJournalsAndEntries() { return mRepository.getAllJournalsAndEntries(); }
 
     public void insert(Journal journal) { mRepository.insertJournal(journal); }
-//    public void deleteTemplate(Template template) {mRepository.deleteWord(template);}
-//    public void updateTemplate(Template template) {mRepository.updateWord(template);}
+    public void delete(Journal journal) {mRepository.deleteJournal(journal);}
+    public void update(Journal journal) {mRepository.updateJournal(journal);}
 //
 //    public Template getTemplate(int position) {return mRepository.getTemplateAtPosition(position);}
 

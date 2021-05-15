@@ -8,6 +8,8 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import io.reactivex.Completable;
+
 public class EntryRepository {
 
     private EntryDao mEntryDao;
@@ -57,6 +59,9 @@ public class EntryRepository {
         return mEntryDao.getDealsList(searchText);
     }
 
+    public Completable insertEntryRX(Entry entry) {
+        return null;
+    }
 
     public void insertWord(Entry word)  {
         new insertEntryAsyncTask(mEntryDao).execute(word);
