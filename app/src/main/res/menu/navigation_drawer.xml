@@ -2,7 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group
         android:id="@+id/group1"
-        android:checkableBehavior="single">
+        android:checkableBehavior="none">
+<!-- -->
         <item
             android:id="@+id/template_manager"
             android:icon="@drawable/ic_home_black_24dp"
@@ -12,15 +13,12 @@
             android:id="@+id/new_entry"
             android:icon="@drawable/ic_home_black_24dp"
             android:title="Create Entry" />
-        <item
-            android:id="@+id/item3"
-            android:icon="@drawable/ic_home_black_24dp"
-            android:title="title_3" />
+
     </group>
 
     <group
         android:id="@+id/group2"
-        android:checkableBehavior="single">
+        android:checkableBehavior="none">
         <item
             android:id="@+id/subtitle"
             android:title="Subtitle">
@@ -38,4 +36,5 @@
             </menu>
         </item>
     </group>
+
 </menu>

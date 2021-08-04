@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.journal22.MainActivity;
 import com.example.journal22.R;
+import com.example.journal22.data.EntryRepository;
 import com.example.journal22.data.Journal;
 import com.example.journal22.data.JournalViewModel;
 import com.example.journal22.old.create_entry;
@@ -121,24 +122,40 @@ public class EntriesFragment extends Fragment {
 
         recyclerView.addItemDecoration(itemDecoration);
 
+
         mEntryViewModel = new ViewModelProvider(requireActivity()).get((EntryViewModel.class));
         mJournalViewModel= new ViewModelProvider(requireActivity()).get((JournalViewModel.class));
+        MainActivity activity = ((MainActivity)getActivity());
+       // activity.setChecked();
+/*
+        MainActivity activity = ((MainActivity)getActivity());
+        activity.currJournal.observe(getViewLifecycleOwner(), id -> {
+            mEntryViewModel.updateJournalID(id);
+            Log.v("AAAAAAAAAAA", "Updated journalID!\n" );
 
-//        Journal journal = new Journal("Journal2");
-//        mJournalViewModel.insert(journal);
+        });
+*/
+
+   //       Journal journal = new Journal("Journal3");
+ //       mJournalViewModel.insert(journal);
 //
 //        mJournalViewModel.getJournalsAndEntries();
 //        Log.v(TAG, "Testing that shiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiit");
 //        Log.v(TAG, mJournalViewModel.getJournalsAndEntries().getValue().get(0).Journal.getTitle());
        // mEntryViewModel.getAllWords().observe(getViewLifecycleOwner(), entries -> {
-        mJournalViewModel.getJournalsAndEntries().observe(getViewLifecycleOwner(), entries -> {
+     //       mJournalViewModel.getJournalsAndEntries().observe(getViewLifecycleOwner(), entries -> {
+        mEntryViewModel.getAllWords().observe(getViewLifecycleOwner(), entries -> {
 
-            ;
             // Update the cached copy of the words in the adapter.
-            adapter.submitList(entries.get(0).entries);
-            txtTotalEntries.setText(String.format("%d entries", entries.get(0).entries.size()));
-           // Toast.makeText(root.getContext(), "THE SIZE OF WORDS IS :"+words.size(),
-                  //  Toast.LENGTH_SHORT).show();
+           // adapter.submitList(entries.get(1).entries);
+              adapter.submitList(entries);
+
+            txtTotalEntries.setText(String.format("%d entries", entries.size()));
+               // txtTotalEntries.setText(String.format("%s journals", entries.get(0).Journal.getJournal_id()));
+            Log.v("INSIDE OBSERVER", "THE SIZE OF WORDS IS :"+ entries.size() );
+
+                Toast.makeText(root.getContext(), "THE SIZE OF WORDS IS :"+ entries.size(),
+                    Toast.LENGTH_SHORT).show();
         });
 
 
@@ -149,7 +166,9 @@ public class EntriesFragment extends Fragment {
                 //Values are passing to activity & to fragment as well
                 Toast.makeText(root.getContext(), "Single Click on position        :"+position,
                         Toast.LENGTH_SHORT).show();
-
+                //Log.v("AAAAAAAAAAA", String.valueOf(position) );
+               // Log.v("all  entries are  \n\n\n", String.valueOf(mEntryViewModel.getSize()) );
+                ;;
                 Entry entry = mEntryViewModel.getEntry(position);
                 int id = entry.getEntry_id();
                 String date = entry.getDate();
@@ -192,6 +211,13 @@ public class EntriesFragment extends Fragment {
 
 
                 Navigation.findNavController(parent.getView()).navigate(R.id.action_main_fragment_to_display_entry, extras);
+
+
+                Date c = Calendar.getInstance().getTime();
+                Log.v("TAG","Current time => " + c);
+                SimpleDateFormat df = new SimpleDateFormat("dd-MMMM-yyyy-EEEE-HH:mm", Locale.getDefault());
+
+                String formattedDate = df.format(c);
                 //Entry newEntry = new Entry("test","testContent",date);
                 //mWordViewModel.insert(newEntry);
                 //startActivity(intent);
@@ -199,7 +225,7 @@ public class EntriesFragment extends Fragment {
 
             @Override
             public void onLongClick(View view, int position) {
-
+                //mEntryViewModel.updateJournalID(2);
                 //Creating the instance of PopupMenu
                 PopupMenu popup = new PopupMenu(root.getContext(), view);
                 //Inflating the Popup using xml file
@@ -225,7 +251,8 @@ public class EntriesFragment extends Fragment {
                             String title = "Updated title";
                             String content = myWord.getContent();
                             String date = myWord.getDate();
-                            Entry entry = new Entry(id,title,content,date);
+                            long journalID = 0;
+                            Entry entry = new Entry(id,title,content,date,journalID);
 
                             //Log.v("Got content mate", myWord.getContent());
                             mEntryViewModel.updateEntry(entry);

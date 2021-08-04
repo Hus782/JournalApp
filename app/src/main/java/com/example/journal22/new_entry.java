@@ -91,9 +91,12 @@ public class new_entry extends Fragment {
                         String formattedDate = df.format(c);
                         Log.v("TAG",formattedDate);
 
+                        MainActivity activity = ((MainActivity)getActivity());
+
                         // create shared ViewModel to insert safely
                         EntryViewModel mWordViewModel = new ViewModelProvider(requireActivity()).get((EntryViewModel.class));
-                        Entry word = new Entry(title,content,formattedDate);
+                        long journalID = activity.currJournal.getValue();
+                        Entry word = new Entry(title,content,formattedDate,journalID);
                         mWordViewModel.insert(word);
 
                         Toast.makeText(getContext(), "Entry Added", Toast.LENGTH_SHORT).show();

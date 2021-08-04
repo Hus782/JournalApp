@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -27,8 +28,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.journal22.data.EntryViewModel;
+import com.example.journal22.data.Journal;
+import com.example.journal22.data.JournalViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.List;
 
 public class main_fragment extends Fragment {
 
@@ -67,6 +73,19 @@ public class main_fragment extends Fragment {
                 .build();
         NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
+
+
+
+/*
+        EntryViewModel mEntryViewModel = new ViewModelProvider(requireActivity()).get((EntryViewModel.class));
+
+        MainActivity activity = ((MainActivity)getActivity());
+        activity.currJournal.observe(getViewLifecycleOwner(), id -> {
+            mEntryViewModel.updateJournalID(id);
+            Log.v("AAAAAAAAAAA", "Updated journalID!\n" );
+
+        });
+*/
         //drawer = getActivity().findViewById(R.id.drawer_layout);
 
 
@@ -109,9 +128,32 @@ public class main_fragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        int item_id = item.getItemId();
+       /*
+        List<Journal> journals = ((MainActivity)getActivity()).journals;
+        int journSize = journals.size();
+        for (int i = 0; i < journSize; i++) {
+            int id = journals.get(i).getJournal_id();
+            if(item_id == id){
+                Toast.makeText(getContext(), "Journal with id=" + String.valueOf(id),Toast.LENGTH_SHORT).show();
+                return true;
 
+            }
+        }
+        */
+        /*
+        JournalViewModel viewModel = new ViewModelProvider(this).get(JournalViewModel.class);
+        LiveData<List<Journal>> journals =  viewModel.getAllJournals();
+        int journSize = journals.getValue().size();
+        for (int i = 0; i < journSize; i++) {
+            int id = journals.getValue().get(i).getJournal_id();
+            if(item_id == id){
+                Toast.makeText(getContext(), "Journal with id=" + String.valueOf(id),Toast.LENGTH_SHORT).show();
 
-        switch (item.getItemId()) {
+            }
+        }
+        */
+        switch (item_id) {
 
 
             case R.id.action_template_manager:
@@ -124,6 +166,8 @@ public class main_fragment extends Fragment {
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
+              //  Toast.makeText(getContext(), "Journal with id=" + String.valueOf(item_id),Toast.LENGTH_SHORT).show();
+
                 return super.onOptionsItemSelected(item);
 
         }

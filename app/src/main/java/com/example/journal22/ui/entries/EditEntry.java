@@ -101,7 +101,8 @@ public class EditEntry extends Fragment {
                         String title = txtTitle.getText().toString();
                         String content = txtEntry.getText().toString();
                         String date = getArguments().getString("EXTRA_DATE");
-                        Entry entry = new Entry(id,title,content,date);
+                        long journalID = 0;
+                        Entry entry = new Entry(id,title,content,date,journalID);
                         Log.v("TAG", String.valueOf(id) );
 
                         Log.v("TAG", title );

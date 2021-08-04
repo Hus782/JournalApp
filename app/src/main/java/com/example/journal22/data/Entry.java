@@ -23,26 +23,31 @@ public class Entry {
     private String content;
     @ColumnInfo(name = "date")
     private String date;
+    public long journalID;
 
 
 
-    public Entry(int entry_id, String title, String content, String date){
+    public Entry(int entry_id, String title, String content, String date, long journalID){
         this.entry_id = entry_id;
         this.title = title;
         this.content = content;
+        this.journalID = journalID;
         this.date = date;
     }
 
     @Ignore
-    public Entry(String title, String content, String date){
+    public Entry(String title, String content, String date,long journalID){
         this.title = title;
         this.content = content;
         this.date = date;
+        this.journalID = journalID;
+
     }
     public int getEntry_id(){return this.entry_id;}
     public String getTitle(){return this.title;}
     public String getContent(){return this.content;}
     public String getDate(){return this.date;}
+    public long getJournalID(){return this.journalID;}
 
 
 

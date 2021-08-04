@@ -1,18 +1,27 @@
 package com.example.journal22;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -21,6 +30,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.journal22.data.Entry;
 import com.example.journal22.data.EntryViewModel;
 import com.example.journal22.data.Journal;
 import com.example.journal22.data.JournalViewModel;
@@ -49,9 +59,12 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
     private ActionBarDrawerToggle toogle;
     private NavigationView navView;
     private NavController navController;
-
-
+    public List<Journal> journals;
+    //public LiveData<Integer> currJournal;
+    public MutableLiveData<Integer> currJournal =
+            new MutableLiveData<>();
     AppBarConfiguration mAppBarConfiguration;
+    public int currJournalChecked = 1;
     public static interface ClickListener {
         public void onClick(View view, int position);
 
@@ -99,9 +112,14 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toast.makeText(this, "CALLED ONCREATE here",
+                Toast.LENGTH_SHORT).show();
+        Log.v(TAG, String.valueOf("CALLED ONCREATE here"));
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+
+        currJournal.setValue(1);
         //myToolbar.showOverflowMenu();
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home_black_24dp);
@@ -125,28 +143,70 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
             JournalViewModel viewModel = new ViewModelProvider(this).get(JournalViewModel.class);
 //            Journal journal = new Journal("Journal3");
 //            viewModel.insert(journal);
+
             final Menu menu = navView.getMenu();
             viewModel.getAllJournals().observe(this, item -> {
                 //List<Journal> AllJournals = item;
-                int journSize = item.size();
-                Log.v(TAG, "Testing that shiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiit");
-                Log.v(TAG, String.valueOf(journSize));
+                journals = item;
 
+                int journSize = item.size();
+                Log.v(TAG, String.valueOf(journSize));
+                Log.v(TAG, "Updating Journals and items and stuff");
+
+                //Toast.makeText(this, journSize, Toast.LENGTH_SHORT).show();
+
+                menu.removeGroup(3);
+                menu.add(3, R.id.new_journal,Menu.NONE,"Create Journal").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        setDialog();
+                        return true;
+                    }
+                });
 
                 for (int i = 0; i < journSize; i++) {
-                   menu.add(item.get(i).getTitle());
+                    int id = item.get(i).getJournal_id();
+                    String title = item.get(i).getTitle();
+                    if(menu.findItem(id)==null){
+                        menu.add(3, id,Menu.NONE,title).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                                                  //menu.add(3, id,Menu.NONE,title).setCheckable(true).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+
+                                @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                Log.v(TAG, String.valueOf("Clicked "  + id));
+                                SpannableString s = new SpannableString(title);
+                                s.setSpan(new ForegroundColorSpan(Color.RED), 0, s.length(), 0);
+                                currJournal.setValue(id);
+                               // menu.findItem(id).setTitle(s);
+                                menu.findItem(id).setChecked(true);
+                                currJournalChecked = id;
+                                //navView.setCheckedItem(id);
+                              //      navController.navigate(R.id.action_main_fragment_self);
+                                drawerLayout.close();
+                                return true;
+                            }
+                        });
+
+                    }
                 }
             });
 
-//            List<Journal> AllJournals = viewModel.getAllJournals().getValue();
-//            int journSize = AllJournals.size();
-//            final Menu menu = navView.getMenu();
-//            for (int i = 1; i <= journSize; i++) {
-//                menu.add(AllJournals.get(i).getTitle());
-//            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+        EntryViewModel mEntryViewModel = new ViewModelProvider(this).get((EntryViewModel.class));
+        //final Menu menu = navView.getMenu();
+
+        this.currJournal.observe(this, id -> {
+            mEntryViewModel.updateJournalID(id);
+            Log.v("AAAAAAAAAAA", "Updated journalID!\n" );
+          //  menu.findItem(id).setChecked(true);
+
+        });
+        //setChecked();
 
         // Handle Navigation item clicks
         // This works with no further action on your part if the menu and destination id’s match.
@@ -154,7 +214,47 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
 
 
     }
-    @Override
+    public void setDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Create Journal");
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        // Add the buttons
+        builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+                JournalViewModel mJournalViewModel= new ViewModelProvider(MainActivity.this).get((JournalViewModel.class));
+                String title = input.getText().toString();
+                if(!title.isEmpty()){
+                Journal journal = new Journal(title);
+                mJournalViewModel.insert(journal);
+                Toast.makeText(MainActivity.this, "Journal added!", Toast.LENGTH_SHORT).show();
+                }
+                else{ Toast.makeText(MainActivity.this, "Please add a name!", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+    public void setChecked() {
+        final Menu menu = navView.getMenu();
+        menu.findItem(currJournal.getValue()).setChecked(true);
+
+    }
+
+        @Override
     public boolean onSupportNavigateUp() {
         // Allows NavigationUI to support proper up navigation or the drawer layout
         // drawer menu, depending on the situation.

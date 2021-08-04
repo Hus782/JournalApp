@@ -12,7 +12,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Entry.class, Template.class, Journal.class}, version = 3,  exportSchema = false)
+@Database(entities = {Entry.class, Template.class, Journal.class}, version = 13,  exportSchema = false)
 public abstract class MyDatabase extends RoomDatabase {
         public abstract EntryDao myDao();
     public abstract TemplateDao templateDao();
@@ -40,6 +40,7 @@ public abstract class MyDatabase extends RoomDatabase {
                             .addCallback(sRoomDatabaseCallback)
                             //.addMigrations(MIGRATION_1_2)
                             .fallbackToDestructiveMigration()
+
 //                            .allowMainThreadQueries()
 
                             .build();
@@ -63,10 +64,10 @@ public abstract class MyDatabase extends RoomDatabase {
               //  TemplateDao tempDao = INSTANCE.templateDao();
                 JournalDao journalDao = INSTANCE.journalDao();
 
-                Journal journal = new Journal("Journal1");
-                journalDao.createJournal(journal);
-                Entry entry = new Entry("Just Testin","Just Testin","2020/5/5");
-                dao.insertEntry(entry);
+              //  Journal journal = new Journal("Journal1");
+              //  journalDao.createJournal(journal);
+               // Entry entry = new Entry("Just Testin","Just Testin","2020/5/5");
+               // dao.insertEntry(entry);
 
                // Template temp = new Template("Just Testin","Just Testin");
                // tempDao.insertTemplate(temp);

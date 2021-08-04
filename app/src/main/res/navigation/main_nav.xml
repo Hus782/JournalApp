@@ -17,6 +17,10 @@
         <action
             android:id="@+id/action_main_fragment_to_template_manager"
             app:destination="@id/template_manager" />
+        <action
+            android:id="@+id/action_main_fragment_self"
+            app:destination="@id/main_fragment"
+            />
     </fragment>
     <fragment
         android:id="@+id/display_entry"

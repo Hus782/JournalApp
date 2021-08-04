@@ -14,23 +14,36 @@ public class EntryRepository {
 
     private EntryDao mEntryDao;
     private LiveData<List<Entry>> mAllEntries;
-
+    private int journalID;
     // Note that in order to unit test the WordRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.
     // See the BasicSample in the android-architecture-components repository at
     // https://github.com/googlesamples
-    EntryRepository(Application application) {
+    public EntryRepository(Application application) {
         MyDatabase db = MyDatabase.getDatabase(application);
         mEntryDao = db.myDao();
-        mAllEntries = mEntryDao.getEntryList();
+        journalID = 1;
+        mAllEntries = mEntryDao.getEntryList(journalID);
+        Log.v("Repository fragment", String.valueOf("Contructor mAllEntries Updated\n\n"));
+
     }
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
-    LiveData<List<Entry>> getAllEntries() {
+  //  public LiveData<List<Entry>> getAllEntries() {
+  //      return mAllEntries;
+  //  }
+    public LiveData<List<Entry>> getAllEntries() {
+       // mAllEntries = mEntryDao.getEntryList(journalID);
+        mAllEntries = mEntryDao.getEntryList(journalID);
+
         return mAllEntries;
     }
 
+    void updateJournalID(int newJournalID) {
+        journalID = newJournalID;
+        mAllEntries = mEntryDao.getEntryList(journalID);
+    }
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures
     // that you're not doing any long running operations on the main thread, blocking the UI.
     void insert(Entry entry) {
@@ -52,7 +65,7 @@ public class EntryRepository {
 
     }
     public Entry getWordAtPosition (int position) {
-        return mAllEntries.getValue().get(position);
+        return     mAllEntries.getValue().get(position);
     }
 
     public LiveData<List<Entry>> getFilteredEntries(String searchText){

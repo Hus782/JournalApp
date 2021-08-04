@@ -17,8 +17,8 @@ public interface EntryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertEntry(Entry entry);
 
-    @Query("Select * from ENTRIES")
-    LiveData<List<Entry>> getEntryList();
+    @Query("Select * from ENTRIES where journalID = :journalID")
+    LiveData<List<Entry>> getEntryList(int journalID);
 
     @Delete
     void deleteEntry(Entry entry);

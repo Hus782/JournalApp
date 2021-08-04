@@ -10,7 +10,7 @@ public class JournalAndEntries {
     public Journal Journal;
     @Relation(
             parentColumn = "journal_id",
-            entityColumn = "entry_id"
+            entityColumn = "journalID"
     )
     public List<Entry> entries;
 }
