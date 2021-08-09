@@ -5,6 +5,11 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.journal22.data.entity.Entry;
+import com.example.journal22.data.entity.Journal;
+import com.example.journal22.data.repository.EntryRepository;
+import com.example.journal22.data.repository.JournalRepo;
+
 import java.util.List;
 
 public class JournalViewModel extends AndroidViewModel {
@@ -12,14 +17,14 @@ public class JournalViewModel extends AndroidViewModel {
     private EntryRepository mEntryRepository;
 
     private final LiveData<List<Journal>> mAllJournals;
-    private final LiveData<List<Entry>> mAllEntries;
+    //private final LiveData<List<Entry>> mAllEntries;
 
     public JournalViewModel (Application application) {
         super(application);
         mJournalRepository = new JournalRepo(application);
         mAllJournals = mJournalRepository.getAllJournals();
         mEntryRepository = new EntryRepository(application);
-        mAllEntries = mEntryRepository.getAllEntries();
+       // mAllEntries = mEntryRepository.getAllEntries();
     }
 
     public LiveData<List<Journal>> getAllJournals() { return mAllJournals; }

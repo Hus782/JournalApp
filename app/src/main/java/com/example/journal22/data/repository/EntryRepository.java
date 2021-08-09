@@ -1,4 +1,4 @@
-package com.example.journal22.data;
+package com.example.journal22.data.repository;
 
 import android.app.Application;
 import android.os.AsyncTask;
@@ -6,44 +6,80 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.journal22.data.MyDatabase;
+import com.example.journal22.data.dao.EntryDao;
+import com.example.journal22.data.entity.Entry;
+
 import java.util.List;
 
 import io.reactivex.Completable;
 
-public class EntryRepository {
-
+public class EntryRepository implements DefaultEntryRepo{
+    private MyDatabase db;
     private EntryDao mEntryDao;
     private LiveData<List<Entry>> mAllEntries;
-    private int journalID;
+   // private MyDatabase mDatabase;
+
+    private static EntryRepository sInstance;
+
+    //private int journalID;
     // Note that in order to unit test the WordRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.
     // See the BasicSample in the android-architecture-components repository at
     // https://github.com/googlesamples
+
     public EntryRepository(Application application) {
-        MyDatabase db = MyDatabase.getDatabase(application);
+        db = MyDatabase.getDatabase(application);
         mEntryDao = db.myDao();
-        journalID = 1;
-        mAllEntries = mEntryDao.getEntryList(journalID);
-        Log.v("Repository fragment", String.valueOf("Contructor mAllEntries Updated\n\n"));
+        mAllEntries = mEntryDao.getEntryListByID(1);
+        //Log.v("Repository fragment", String.valueOf("Contructor mAllEntries Updated\n\n"));
 
     }
+
+    public EntryRepository(final MyDatabase database) {
+        db = database;
+        mEntryDao = db.myDao();
+
+        mAllEntries = mEntryDao.getEntryListByID(1);
+
+    }
+
+    public static EntryRepository getInstance(final MyDatabase database) {
+        if (sInstance == null) {
+            synchronized (EntryRepository.class) {
+                if (sInstance == null) {
+                    sInstance = new EntryRepository(database);
+                }
+            }
+        }
+        return sInstance;
+    }
+
+
+
+
+
+
+
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
   //  public LiveData<List<Entry>> getAllEntries() {
   //      return mAllEntries;
   //  }
-    public LiveData<List<Entry>> getAllEntries() {
+    public LiveData<List<Entry>> getEntriesByID(int id) {
        // mAllEntries = mEntryDao.getEntryList(journalID);
-        mAllEntries = mEntryDao.getEntryList(journalID);
+        mAllEntries = mEntryDao.getEntryListByID(id);
 
         return mAllEntries;
     }
+    public LiveData<List<Entry>> getAllEntries() {
+        // mAllEntries = mEntryDao.getEntryList(journalID);
+        mAllEntries = mEntryDao.getEntryListAll();
 
-    void updateJournalID(int newJournalID) {
-        journalID = newJournalID;
-        mAllEntries = mEntryDao.getEntryList(journalID);
+        return mAllEntries;
     }
+/*
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures
     // that you're not doing any long running operations on the main thread, blocking the UI.
     void insert(Entry entry) {
@@ -64,6 +100,8 @@ public class EntryRepository {
         });
 
     }
+
+ */
     public Entry getWordAtPosition (int position) {
         return     mAllEntries.getValue().get(position);
     }

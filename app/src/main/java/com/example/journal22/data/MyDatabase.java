@@ -3,11 +3,19 @@ package com.example.journal22.data;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+
+import com.example.journal22.data.dao.EntryDao;
+import com.example.journal22.data.dao.JournalDao;
+import com.example.journal22.data.dao.TemplateDao;
+import com.example.journal22.data.entity.Entry;
+import com.example.journal22.data.entity.Journal;
+import com.example.journal22.data.entity.Template;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,6 +31,7 @@ public abstract class MyDatabase extends RoomDatabase {
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
+    private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();
 
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
@@ -31,7 +40,7 @@ public abstract class MyDatabase extends RoomDatabase {
         }
     };
 
-    static MyDatabase getDatabase(final Context context) {
+    public static MyDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (MyDatabase.class) {
                 if (INSTANCE == null) {
@@ -60,9 +69,9 @@ public abstract class MyDatabase extends RoomDatabase {
             databaseWriteExecutor.execute(() -> {
                 // Populate the database in the background.
                 // If you want to start with more words, just add them.
-                EntryDao dao = INSTANCE.myDao();
+          //      EntryDao dao = INSTANCE.myDao();
               //  TemplateDao tempDao = INSTANCE.templateDao();
-                JournalDao journalDao = INSTANCE.journalDao();
+        //        JournalDao journalDao = INSTANCE.journalDao();
 
               //  Journal journal = new Journal("Journal1");
               //  journalDao.createJournal(journal);
@@ -74,4 +83,5 @@ public abstract class MyDatabase extends RoomDatabase {
             });
         }
     };
+
 }

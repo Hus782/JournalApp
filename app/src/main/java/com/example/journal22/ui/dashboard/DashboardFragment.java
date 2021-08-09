@@ -5,18 +5,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.applandeo.materialcalendarview.CalendarView;
-import com.applandeo.materialcalendarview.EventDay;
 import com.example.journal22.R;
-import com.example.journal22.data.EntryViewModel;
+import com.example.journal22.ui.entries.EntryViewModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,7 +42,7 @@ public class DashboardFragment extends Fragment {
         mWordViewModel = new ViewModelProvider(requireActivity()).get((EntryViewModel.class));
 
 
-        mWordViewModel.getAllWords().observe(getViewLifecycleOwner(), words -> {
+        mWordViewModel.getAllEntries().observe(getViewLifecycleOwner(), words -> {
             // Update the cached copy of the words in the adapter.
             for (int i=0;i<words.size();i++){
                 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");

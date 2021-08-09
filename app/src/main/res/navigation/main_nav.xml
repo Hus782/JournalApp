@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/new_entry"
-        android:name="com.example.journal22.new_entry"
+        android:name="com.example.journal22.ui.entries.new_entry"
         android:label="new_entry_fragment"
         tools:layout="@layout/new_entry_fragment" >
         <action

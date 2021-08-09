@@ -15,20 +15,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.journal22.R;
-import com.example.journal22.data.Entry;
-import com.example.journal22.data.EntryViewModel;
+import com.example.journal22.data.entity.Entry;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import static android.content.ContentValues.TAG;
 
 public class EditEntry extends Fragment {
 
@@ -58,6 +54,7 @@ public class EditEntry extends Fragment {
 
         return root;
     }
+
     public String changeDateFormat(String date){
         SimpleDateFormat format = new SimpleDateFormat("dd-MMMM-yyyy-EEEE-HH:mm", Locale.getDefault());
         Date mydate;
@@ -89,24 +86,26 @@ public class EditEntry extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-
-
                         mWordViewModel = new ViewModelProvider(requireActivity()).get((EntryViewModel.class));
 
                         txtEntry = getView().findViewById(R.id.txtEditedEntry);
                         txtTitle = getView().findViewById(R.id.txtEditedTitle);
 
                         int id =Integer.parseInt(getArguments().getString("EXTRA_ID"));
-
                         String title = txtTitle.getText().toString();
                         String content = txtEntry.getText().toString();
                         String date = getArguments().getString("EXTRA_DATE");
-                        long journalID = 0;
-                        Entry entry = new Entry(id,title,content,date,journalID);
-                        Log.v("TAG", String.valueOf(id) );
 
-                        Log.v("TAG", title );
-                        Log.v("TAG", content );
+
+                        long journalID = mWordViewModel.currJournal.getValue();// activity.currJournal.getValue();
+                        if(journalID == -1){
+                            journalID = 1;
+                        }
+                        Entry entry = new Entry(id,title,content,date,journalID);
+                        //Log.v("TAG", String.valueOf(id) );
+
+                        //Log.v("TAG", title );
+                        //Log.v("TAG", content );
                         //Log.v("Got content mate", myWord.getContent());
                         mWordViewModel.updateEntry(entry);
                         Toast.makeText(getContext(), "Updated (probably)", Toast.LENGTH_SHORT).show();

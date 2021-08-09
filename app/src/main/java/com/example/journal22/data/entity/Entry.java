@@ -1,4 +1,4 @@
-package com.example.journal22.data;
+package com.example.journal22.data.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;

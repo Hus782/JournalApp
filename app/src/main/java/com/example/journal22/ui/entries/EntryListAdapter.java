@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.journal22.R;
-import com.example.journal22.data.Entry;
+import com.example.journal22.data.entity.Entry;
 
 
 /*

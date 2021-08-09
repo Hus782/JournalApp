@@ -29,12 +29,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.journal22.MainActivity;
 import com.example.journal22.R;
-import com.example.journal22.data.EntryRepository;
-import com.example.journal22.data.Journal;
 import com.example.journal22.data.JournalViewModel;
 import com.example.journal22.old.create_entry;
-import com.example.journal22.data.Entry;
-import com.example.journal22.data.EntryViewModel;
+import com.example.journal22.data.entity.Entry;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
@@ -144,7 +141,16 @@ public class EntriesFragment extends Fragment {
 //        Log.v(TAG, mJournalViewModel.getJournalsAndEntries().getValue().get(0).Journal.getTitle());
        // mEntryViewModel.getAllWords().observe(getViewLifecycleOwner(), entries -> {
      //       mJournalViewModel.getJournalsAndEntries().observe(getViewLifecycleOwner(), entries -> {
-        mEntryViewModel.getAllWords().observe(getViewLifecycleOwner(), entries -> {
+        mEntryViewModel.currJournal.observe(getViewLifecycleOwner(), id -> {
+       //     mEntryViewModel.updateJournalID(id);
+
+        });
+       // MediatorLiveData liveDataMerger = new MediatorLiveData<>();
+       // liveDataMerger.addSource(mEntryViewModel.getAllWords(), entries -> adapter.submitList(entries););
+
+
+
+        mEntryViewModel.getAllEntries().observe(getViewLifecycleOwner(), entries -> {
 
             // Update the cached copy of the words in the adapter.
            // adapter.submitList(entries.get(1).entries);
@@ -177,11 +183,10 @@ public class EntriesFragment extends Fragment {
                 TextView editText2 = view.findViewById(R.id.txtName);
                 String title = editText2.getText().toString();
 
-                Log.v(TAG, String.valueOf(id) );
+                //Log.v(TAG, String.valueOf(id) );
 
-                Log.v(TAG, content);
-                Log.v(TAG, title);
-                //Log.v(TAG, "single clicked mateeeeeeeeeeeeeeeeeeeee");
+                //Log.v(TAG, content);
+                //Log.v(TAG, title);
 
                 //Intent intent = new Intent(root.getContext(), show_entry.class);
                 Bundle extras = new Bundle();
@@ -213,11 +218,7 @@ public class EntriesFragment extends Fragment {
                 Navigation.findNavController(parent.getView()).navigate(R.id.action_main_fragment_to_display_entry, extras);
 
 
-                Date c = Calendar.getInstance().getTime();
-                Log.v("TAG","Current time => " + c);
-                SimpleDateFormat df = new SimpleDateFormat("dd-MMMM-yyyy-EEEE-HH:mm", Locale.getDefault());
 
-                String formattedDate = df.format(c);
                 //Entry newEntry = new Entry("test","testContent",date);
                 //mWordViewModel.insert(newEntry);
                 //startActivity(intent);
@@ -285,7 +286,7 @@ public class EntriesFragment extends Fragment {
                 // User clicked OK button
                 Entry myWord = mEntryViewModel.getEntry(position);
                 //Log.v("Got content mate", myWord.getContent());
-                mEntryViewModel.deleteWord(myWord);
+                mEntryViewModel.deleteEntry(myWord);
                 Toast.makeText(context, "Item deleted!", Toast.LENGTH_SHORT).show();
             }
         });

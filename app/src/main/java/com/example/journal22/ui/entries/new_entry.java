@@ -1,17 +1,15 @@
-package com.example.journal22;
+package com.example.journal22.ui.entries;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,14 +21,14 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.journal22.data.Entry;
-import com.example.journal22.data.EntryViewModel;
-import com.example.journal22.data.Template;
+import com.example.journal22.MainActivity;
+import com.example.journal22.R;
+import com.example.journal22.data.entity.Entry;
+import com.example.journal22.old.NewEntryViewModel;
+import com.example.journal22.data.entity.Template;
 import com.example.journal22.data.TemplateViewModel;
-import com.example.journal22.old.create_entry;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -81,34 +79,40 @@ public class new_entry extends Fragment {
                         String content = editText.getText().toString();
                         EditText editText2 = (EditText) root.findViewById(R.id.txtTitle);
                         String title = editText2.getText().toString();
-                        Log.v("TAG", content);
 
-
-                        Date c = Calendar.getInstance().getTime();
-                        Log.v("TAG","Current time => " + c);
-                        SimpleDateFormat df = new SimpleDateFormat("dd-MMMM-yyyy-EEEE-HH:mm", Locale.getDefault());
-
-                        String formattedDate = df.format(c);
-                        Log.v("TAG",formattedDate);
-
-                        MainActivity activity = ((MainActivity)getActivity());
-
-                        // create shared ViewModel to insert safely
-                        EntryViewModel mWordViewModel = new ViewModelProvider(requireActivity()).get((EntryViewModel.class));
-                        long journalID = activity.currJournal.getValue();
-                        Entry word = new Entry(title,content,formattedDate,journalID);
-                        mWordViewModel.insert(word);
-
-                        Toast.makeText(getContext(), "Entry Added", Toast.LENGTH_SHORT).show();
-
+                        createEntry(content, title);
                         // navigate back to main fragment
                         Navigation.findNavController(view).navigate(R.id.action_new_entry_to_main_fragment);
+
                     }
                 });
         return root;
 
     }
 
+    public void createEntry(String content, String title) {
+
+        Date c = Calendar.getInstance().getTime();
+        Log.v("TAG","Current time => " + c);
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMMM-yyyy-EEEE-HH:mm", Locale.getDefault());
+
+        String formattedDate = df.format(c);
+        Log.v("TAG",formattedDate);
+
+        MainActivity activity = ((MainActivity)getActivity());
+
+        // create shared ViewModel to insert safely
+        EntryViewModel mWordViewModel = new ViewModelProvider(requireActivity()).get((EntryViewModel.class));
+        long journalID = mWordViewModel.currJournal.getValue();// activity.currJournal.getValue();
+        if(journalID == -1){
+            journalID = 1;
+        }
+        Entry word = new Entry(title,content,formattedDate,journalID);
+        mWordViewModel.insertEntry(word);
+
+        Toast.makeText(getContext(), "Entry Added", Toast.LENGTH_SHORT).show();
+
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -143,8 +147,8 @@ public class new_entry extends Fragment {
                 // User chose the "Settings" item, show the app settings UI...
                 Toast.makeText(getContext(), "Nothing happened!", Toast.LENGTH_SHORT).show();
 
-
                 return true;
+
             case R.id.action_create_template:
                 // User chose the "Settings" item, show the app settings UI...
                 EditText editText = (EditText) getView().findViewById(R.id.txtEntry);

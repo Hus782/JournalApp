@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.example.journal22.MainActivity;
 import com.example.journal22.R;
-import com.example.journal22.data.Template;
+import com.example.journal22.data.entity.Template;
 import com.example.journal22.data.TemplateViewModel;
 import com.example.journal22.ui.entries.EntriesViewModel;
 import com.example.journal22.ui.entries.RecyclerTouchListener;

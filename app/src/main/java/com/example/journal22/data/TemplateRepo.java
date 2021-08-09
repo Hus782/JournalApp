@@ -6,6 +6,9 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.journal22.data.dao.TemplateDao;
+import com.example.journal22.data.entity.Template;
+
 import java.util.List;
 
 public class TemplateRepo {
