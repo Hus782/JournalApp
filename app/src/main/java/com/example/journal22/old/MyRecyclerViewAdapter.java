@@ -29,7 +29,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.activity_entries, parent, false);
+        View view = mInflater.inflate(R.layout.fragment_entries, parent, false);
         return new ViewHolder(view);
     }
 
@@ -53,7 +53,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.textView);
+          //  myTextView = itemView.findViewById(R.id.textView);
             itemView.setOnClickListener(this);
         }
 

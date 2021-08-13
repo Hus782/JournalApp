@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.journal22.MainActivity;
 import com.example.journal22.R;
+import com.example.journal22.Utils;
 import com.example.journal22.data.entity.Entry;
 import com.example.journal22.old.NewEntryViewModel;
 import com.example.journal22.data.entity.Template;
@@ -57,7 +58,6 @@ public class new_entry extends Fragment {
 
         setHasOptionsMenu(true);
 
-
         EditText entry = root.findViewById(R.id.txtEntry);
         try{
             String body = getArguments().getString("EXTRA_CONTENT");
@@ -90,38 +90,41 @@ public class new_entry extends Fragment {
 
     }
 
-    public void createEntry(String content, String title) {
-
+    public String getFormattedDate() {
         Date c = Calendar.getInstance().getTime();
         Log.v("TAG","Current time => " + c);
         SimpleDateFormat df = new SimpleDateFormat("dd-MMMM-yyyy-EEEE-HH:mm", Locale.getDefault());
 
         String formattedDate = df.format(c);
         Log.v("TAG",formattedDate);
+        return formattedDate;
+    }
 
-        MainActivity activity = ((MainActivity)getActivity());
-
+    public void createEntry(String content, String title) {
+        String formattedDate = getFormattedDate();
         // create shared ViewModel to insert safely
         EntryViewModel mWordViewModel = new ViewModelProvider(requireActivity()).get((EntryViewModel.class));
         long journalID = mWordViewModel.currJournal.getValue();// activity.currJournal.getValue();
         if(journalID == -1){
             journalID = 1;
         }
-        Entry word = new Entry(title,content,formattedDate,journalID);
+        long wordsCount = Utils.countWords(content);
+
+        Entry word = new Entry(title,content,formattedDate,journalID, wordsCount);
         mWordViewModel.insertEntry(word);
 
         Toast.makeText(getContext(), "Entry Added", Toast.LENGTH_SHORT).show();
 
     }
 
+
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         mViewModel = new ViewModelProvider(this).get(NewEntryViewModel.class);
-        // TODO: Use the ViewModel
-
         mTemplateViewModel = new ViewModelProvider(this).get((TemplateViewModel.class));
-
 
         mTemplateViewModel.getAllTemps().observe(getViewLifecycleOwner(), words -> {
 
@@ -156,8 +159,8 @@ public class new_entry extends Fragment {
 
 
                 //ask for template title
-                AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-                final EditText edittext = new EditText(getContext());
+                AlertDialog.Builder alert = new AlertDialog.Builder(requireContext());
+                final EditText edittext = new EditText(requireContext());
                 alert.setMessage("Enter template title");
                 alert.setTitle("Create template");
                 alert.setView(edittext);
@@ -165,7 +168,7 @@ public class new_entry extends Fragment {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String title = edittext.getText().toString();
                         if(title.isEmpty()){
-                            title = "Template " + String.valueOf(temps.size());
+                            title = "Template " + temps.size();
                         }
 
                         //Toast.makeText(create_entry.this, YouEditTextValue, Toast.LENGTH_SHORT).show();

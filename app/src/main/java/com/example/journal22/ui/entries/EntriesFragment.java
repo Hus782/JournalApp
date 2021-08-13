@@ -122,7 +122,7 @@ public class EntriesFragment extends Fragment {
 
         mEntryViewModel = new ViewModelProvider(requireActivity()).get((EntryViewModel.class));
         mJournalViewModel= new ViewModelProvider(requireActivity()).get((JournalViewModel.class));
-        MainActivity activity = ((MainActivity)getActivity());
+ //       MainActivity activity = ((MainActivity)getActivity());
        // activity.setChecked();
 /*
         MainActivity activity = ((MainActivity)getActivity());
@@ -172,9 +172,7 @@ public class EntriesFragment extends Fragment {
                 //Values are passing to activity & to fragment as well
                 Toast.makeText(root.getContext(), "Single Click on position        :"+position,
                         Toast.LENGTH_SHORT).show();
-                //Log.v("AAAAAAAAAAA", String.valueOf(position) );
-               // Log.v("all  entries are  \n\n\n", String.valueOf(mEntryViewModel.getSize()) );
-                ;;
+
                 Entry entry = mEntryViewModel.getEntry(position);
                 int id = entry.getEntry_id();
                 String date = entry.getDate();
@@ -182,11 +180,6 @@ public class EntriesFragment extends Fragment {
                 String content = editText.getText().toString();
                 TextView editText2 = view.findViewById(R.id.txtName);
                 String title = editText2.getText().toString();
-
-                //Log.v(TAG, String.valueOf(id) );
-
-                //Log.v(TAG, content);
-                //Log.v(TAG, title);
 
                 //Intent intent = new Intent(root.getContext(), show_entry.class);
                 Bundle extras = new Bundle();
@@ -200,6 +193,8 @@ public class EntriesFragment extends Fragment {
                 // access parent fragment (try to)
                 NavHostFragment navHostFragment = (NavHostFragment) getParentFragment();
                 Fragment parent = (Fragment) navHostFragment.getParentFragment();
+                Navigation.findNavController(parent.getView()).navigate(R.id.action_main_fragment_to_display_entry, extras);
+
                 //parent.getView().findViewById(R.id.element_id);
 
 /*
@@ -212,12 +207,6 @@ public class EntriesFragment extends Fragment {
                         null, // NavOptions
                         extras2);
 */
-
-
-
-                Navigation.findNavController(parent.getView()).navigate(R.id.action_main_fragment_to_display_entry, extras);
-
-
 
                 //Entry newEntry = new Entry("test","testContent",date);
                 //mWordViewModel.insert(newEntry);
@@ -253,7 +242,9 @@ public class EntriesFragment extends Fragment {
                             String content = myWord.getContent();
                             String date = myWord.getDate();
                             long journalID = 0;
-                            Entry entry = new Entry(id,title,content,date,journalID);
+                            long wordsCount = countWords(content);
+
+                            Entry entry = new Entry(id,title,content,date,journalID,wordsCount);
 
                             //Log.v("Got content mate", myWord.getContent());
                             mEntryViewModel.updateEntry(entry);
@@ -275,6 +266,12 @@ public class EntriesFragment extends Fragment {
 
         }));
         return root;
+    }
+    public int countWords(String string) {
+        String trim = string.trim();
+        if (trim.isEmpty())
+            return 0;
+        return trim.split("\\s+").length; // separate string around spaces
     }
     public void setDialog(Context context, int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

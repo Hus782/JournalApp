@@ -4,35 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="10dp"
     tools:context=".ui.templates.display_template">
 
     <TextView
         android:id="@+id/txtBody"
-        android:transitionName="TempBody"
-
-        android:layout_width="376dp"
-        android:layout_height="593dp"
-        android:ems="10"
-        android:gravity="top"
-        android:inputType="textMultiLine"
-        android:lineSpacingExtra="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/Content.TextView.Style"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toTopOf="@+id/edit_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+        />
 
     <TextView
         android:id="@+id/txtTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:singleLine="true"
-        android:textColor="#000000"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        style="@style/Title.TextView.Style"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.218"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
 
 
 
@@ -40,12 +33,13 @@
         android:id="@+id/edit_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginBottom="48dp"
         android:clickable="true"
         android:src="@drawable/outline_settings_black_48dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.919"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtBody"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

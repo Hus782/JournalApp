@@ -4,11 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".old.calendar_view">
+    tools:context=".MainActivity">
 
     <com.applandeo.materialcalendarview.CalendarView
         android:id="@+id/mCalendarView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:eventsEnabled="true"
+        app:type="one_day_picker"
+        app:highlightedDaysLabelsColor="#E91E63"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

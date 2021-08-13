@@ -8,11 +8,13 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 public class Utils {
-    public static Entry createEntry(int entry_id, String title, String content, String date, long journalID) throws Exception {
+    /*public static Entry createEntry(int entry_id, String title, String content, String date, long journalID) throws Exception {
         Entry entry = new Entry(title, content, date, journalID);
         return entry;
     }
 
+
+     */
     public static boolean compareEntries(Entry entry1, Entry entry2) throws Exception {
         assertThat(entry1.getEntry_id(), is(entry2.getEntry_id()));
         assertThat(entry1.getTitle(), is(entry2.getTitle()));
@@ -31,5 +33,14 @@ public class Utils {
         assertThat(a.getJournal_id(), is(b.getJournal_id()));
         assertThat(a.getTitle(), is(b.getTitle()));
         return true;
+    }
+
+
+
+    public static long countWords(String string) {
+        String trim = string.trim();
+        if (trim.isEmpty())
+            return 0;
+        return trim.split("\\s+").length; // separate string around spaces
     }
 }

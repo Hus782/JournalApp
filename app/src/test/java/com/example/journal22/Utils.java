@@ -10,11 +10,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 public class Utils {
-    public static Entry createEntry(int entry_id, String title, String content, String date, long journalID) throws Exception {
+    /*public static Entry createEntry(int entry_id, String title, String content, String date, long journalID) throws Exception {
         Entry entry = new Entry(title, content, date, journalID);
         return entry;
     }
-
+*/
     public static boolean compareEntries(Entry entry1, Entry entry2)  {
         assertEquals(entry1.getEntry_id(), entry2.getEntry_id());
         assertEquals(entry1.getTitle(), entry2.getTitle());
@@ -33,5 +33,12 @@ public class Utils {
         assertThat(a.getJournal_id(), is(b.getJournal_id()));
         assertThat(a.getTitle(), is(b.getTitle()));
         return true;
+    }
+
+        public int countWords(String string) {
+        String trim = string.trim();
+        if (trim.isEmpty())
+            return 0;
+        return trim.split("\\s+").length; // separate string around spaces
     }
 }

@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/main_fragment"
         android:name="com.example.journal22.main_fragment"
-        android:label="main_fragment" >
+        android:label="Journal" >
         <action
             android:id="@+id/action_main_fragment_to_display_entry"
             app:destination="@id/display_entry" />
@@ -33,8 +33,8 @@
     <fragment
         android:id="@+id/new_entry"
         android:name="com.example.journal22.ui.entries.new_entry"
-        android:label="new_entry_fragment"
-        tools:layout="@layout/new_entry_fragment" >
+        android:label="Write something"
+        tools:layout="@layout/new_entry_fragment">
         <action
             android:id="@+id/action_new_entry_to_main_fragment"
             app:destination="@id/main_fragment" />

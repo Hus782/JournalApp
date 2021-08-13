@@ -44,7 +44,7 @@ public class create_entry extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_entry);
+        setContentView(R.layout.new_entry_fragment);
 /*
         String mydate = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
         Log.v(TAG, mydate);

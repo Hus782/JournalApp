@@ -10,11 +10,11 @@ import java.util.List;
 public class TestData {
 
     static final Entry ENTRY_ENTITY = new Entry(1,"title1", "content1", "893024809",
-            1);
+            1,  1);
     static final Entry ENTRY_ENTITY2 = new Entry(2,"title2", "content2", "893024809",
-            1);
+            1,  1);
     static final Entry ENTRY_EDITED = new Entry(1,"edited_title", "edited content", "893024809",
-            1);
+            1, 1);
     static final List<Entry> ENTRIES = Arrays.asList(ENTRY_ENTITY, ENTRY_ENTITY2);
 
     static final Template TEMPLATE_ENTITY = new Template(1,"title","Content");

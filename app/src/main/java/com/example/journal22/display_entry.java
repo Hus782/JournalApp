@@ -53,7 +53,7 @@ public class display_entry extends Fragment {
 
         txtEntry.setText(content);
         txtTitle.setText(title);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(changeDateFormat(date));
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(Utils.changeDateFormat(date));
 
 
 
@@ -98,19 +98,6 @@ public class display_entry extends Fragment {
 
 
     }
-    public String changeDateFormat(String date){
-        SimpleDateFormat format = new SimpleDateFormat("dd-MMMM-yyyy-EEEE-HH:mm", Locale.getDefault());
-        Date mydate;
-        try {
-            mydate = format.parse(date);
 
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return "day";
-
-        }
-        String WeekDay = new SimpleDateFormat("EEE, MMMM dd, yyyy", Locale.getDefault()).format(mydate);
-        return WeekDay;
-    }
 }
 

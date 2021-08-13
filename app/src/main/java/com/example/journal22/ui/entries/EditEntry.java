@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.journal22.R;
+import com.example.journal22.Utils;
 import com.example.journal22.data.entity.Entry;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -95,13 +96,14 @@ public class EditEntry extends Fragment {
                         String title = txtTitle.getText().toString();
                         String content = txtEntry.getText().toString();
                         String date = getArguments().getString("EXTRA_DATE");
-
+                        long wordsCount = Utils.countWords(content);
 
                         long journalID = mWordViewModel.currJournal.getValue();// activity.currJournal.getValue();
                         if(journalID == -1){
                             journalID = 1;
                         }
-                        Entry entry = new Entry(id,title,content,date,journalID);
+
+                        Entry entry = new Entry(id,title,content,date,journalID, wordsCount);
                         //Log.v("TAG", String.valueOf(id) );
 
                         //Log.v("TAG", title );
@@ -120,4 +122,4 @@ public class EditEntry extends Fragment {
                 });
     }
 
-}
+    }

@@ -23,24 +23,33 @@ public class Entry {
     private String content;
     @ColumnInfo(name = "date")
     private String date;
+
+    @ColumnInfo(name = "journalID")
     public long journalID;
+    @ColumnInfo(name = "mood")
+    public int mood;
+    @ColumnInfo(name = "wordsCount")
+    public long wordsCount;
 
 
-
-    public Entry(int entry_id, String title, String content, String date, long journalID){
+    public Entry(int entry_id, String title, String content, String date, long journalID, long wordsCount){
         this.entry_id = entry_id;
         this.title = title;
         this.content = content;
         this.journalID = journalID;
         this.date = date;
+        this.mood = 1;
+        this.wordsCount = wordsCount;
     }
 
     @Ignore
-    public Entry(String title, String content, String date,long journalID){
+    public Entry(String title, String content, String date,long journalID , long wordsCount){
         this.title = title;
         this.content = content;
         this.date = date;
         this.journalID = journalID;
+        this.mood = 1;
+        this.wordsCount = wordsCount;
 
     }
     public int getEntry_id(){return this.entry_id;}
@@ -48,6 +57,9 @@ public class Entry {
     public String getContent(){return this.content;}
     public String getDate(){return this.date;}
     public long getJournalID(){return this.journalID;}
+    public long getWordsCount(){return this.wordsCount;}
+
+
 
 
 

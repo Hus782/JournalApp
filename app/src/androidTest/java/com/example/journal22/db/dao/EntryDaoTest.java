@@ -76,7 +76,7 @@ public class EntryDaoTest {
         List<Entry> all_entries = LiveDataTestUtil.getValue(mEntryDao.getEntryListAll());
 
         assertThat(Utils.compareEntries(all_entries.get(0), ENTRY_ENTITY), is(true));
-
+        assertEquals(all_entries.get(0).getWordsCount(), Utils.countWords(all_entries.get(0).getContent()));
     }
     @Test
     public void insertTest2() throws Exception {
