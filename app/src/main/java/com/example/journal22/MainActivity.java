@@ -4,6 +4,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,12 +14,15 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import android.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -42,7 +47,6 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
     private static final String TAG = "MyActivity";
 
     private EntryViewModel mWordViewModel;
-    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
     private RecyclerView recyclerView;
     private EntryListAdapter adapter;
@@ -63,6 +67,7 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
     */
     AppBarConfiguration mAppBarConfiguration;
     public int currJournalChecked = 1;
+
     public static interface ClickListener {
         public void onClick(View view, int position);
 
@@ -118,7 +123,6 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-
         //myToolbar.showOverflowMenu();
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home_black_24dp);
@@ -140,23 +144,6 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
         setMenu();
         NavigationUI.setupWithNavController(navView, navController);
 
-
-
-  //      EntryViewModel mEntryViewModel = new ViewModelProvider(this).get((EntryViewModel.class));
-        //final Menu menu = navView.getMenu();
-/*
-        this.currJournal.observe(this, id -> {
-            mEntryViewModel.updateJournalID(id);
-            Log.v("AAAAAAAAAAA", "Updated journalID!\n" );
-          //  menu.findItem(id).setChecked(true);
-
-        });
-
- */
-        //setChecked();
-
-        // Handle Navigation item clicks
-        // This works with no further action on your part if the menu and destination id’s match.
 
 
     }
@@ -270,6 +257,23 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
         return NavigationUI.navigateUp(navController, drawerLayout);
        // return NavigationUI.navigateUp(navController, drawerLayout);// || super.onSupportNavigateUp();
     }
+    /*
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.my_menu, menu);
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+        return true;
+    }
+
+
+     */
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -286,6 +290,7 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
                 Toast.makeText(this, "Nothing happened!", Toast.LENGTH_SHORT).show();
 
                 return true;
+
             // Android home
             //  case android.R.id.home:
             //     dl.openDrawer(GravityCompat.START);

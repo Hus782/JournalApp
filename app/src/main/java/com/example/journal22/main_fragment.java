@@ -1,7 +1,10 @@
 package com.example.journal22;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -14,17 +17,23 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.journal22.data.entity.Entry;
 import com.example.journal22.old.MainFragmentViewModel;
+import com.example.journal22.ui.entries.EntryViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.List;
 
 public class main_fragment extends Fragment {
 
@@ -113,36 +122,104 @@ public class main_fragment extends Fragment {
         menu.clear();
         inflater.inflate(R.menu.my_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
+
+
+/*
+
+        MenuItem searchViewItem
+                = menu.findItem(R.id.action_search);
+        SearchView searchView
+                = (SearchView) MenuItemCompat
+                .getActionView(searchViewItem);
+
+ */
+        /*
+        SearchView sv = new SearchView(((MainActivity) getActivity()).getSupportActionBar().getThemedContext());
+        MenuItemCompat.setShowAsAction(searchViewItem, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
+        MenuItemCompat.setActionView(searchViewItem, sv);
+        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                System.out.println("search query submit");
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                System.out.println("tap");
+                return false;
+            }
+        });
+         */
+
+       // MenuItem searchItem = menu.findItem(R.id.action_search);
+        //SearchView searchView = (SearchView) searchItem.getActionView();
+
+    /*    searchView.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Navigation.findNavController(view).navigate(R.id.action_main_fragment_to_searchFragment);
+
+                    }
+                });
+
+     */
+        /*
+        searchView.setOnQueryTextListener(
+                new SearchView.OnQueryTextListener() {
+
+                    @Override
+                    public boolean onQueryTextSubmit(String query)
+                    {
+                        EntryViewModel mEntryViewModel = new ViewModelProvider(requireActivity()).get((EntryViewModel.class));
+
+                        Log.v("onQueryTextSubmit", query);
+                    //    LiveData<List<Entry>> entries = mEntryViewModel.getFilteredEntries(query);
+                       // Log.v("onQueryTextSubmit size", String.valueOf(entries.getValue()==null));
+                        mEntryViewModel.getFilteredEntries(query).observe(getViewLifecycleOwner(), entries -> {
+
+                            Log.v("INSIDE OBSERVER", "THE SIZE OF WORDS IS :"+ entries.size() );
+                            Log.v("onQueryTextSubmit size", String.valueOf(entries.size()));
+
+                        });
+
+
+                        Toast.makeText(getView().getContext(), query,
+                                Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+
+                    // This method is overridden to filter
+                    // the adapter according to a search query
+                    // when the user is typing search
+                    @Override
+                    public boolean onQueryTextChange(String newText)
+                    {
+                        // Search query not found in List View
+                        Log.v("onQueryTextChange", newText);
+
+                        Toast.makeText(getView().getContext(), "onQueryTextChange",
+                                Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                });
+
+
+
+         */
+
+
+
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int item_id = item.getItemId();
-       /*
-        List<Journal> journals = ((MainActivity)getActivity()).journals;
-        int journSize = journals.size();
-        for (int i = 0; i < journSize; i++) {
-            int id = journals.get(i).getJournal_id();
-            if(item_id == id){
-                Toast.makeText(getContext(), "Journal with id=" + String.valueOf(id),Toast.LENGTH_SHORT).show();
-                return true;
 
-            }
-        }
-        */
-        /*
-        JournalViewModel viewModel = new ViewModelProvider(this).get(JournalViewModel.class);
-        LiveData<List<Journal>> journals =  viewModel.getAllJournals();
-        int journSize = journals.getValue().size();
-        for (int i = 0; i < journSize; i++) {
-            int id = journals.getValue().get(i).getJournal_id();
-            if(item_id == id){
-                Toast.makeText(getContext(), "Journal with id=" + String.valueOf(id),Toast.LENGTH_SHORT).show();
-
-            }
-        }
-        */
         switch (item_id) {
 
 
@@ -150,6 +227,13 @@ public class main_fragment extends Fragment {
                 // User chose the "Settings" item, show the app settings UI...
                 Toast.makeText(getContext(), "Templates showing!", Toast.LENGTH_SHORT).show();
                 Navigation.findNavController(getView()).navigate(R.id.action_main_fragment_to_template_manager);
+
+                return true;
+
+            case R.id.action_search:
+                // User chose the "Settings" item, show the app settings UI...
+              //  Toast.makeText(getContext(), "Templates showing!", Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(getView()).navigate(R.id.action_main_fragment_to_searchFragment);
 
                 return true;
 

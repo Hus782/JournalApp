@@ -21,9 +21,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.journal22.MainActivity;
 import com.example.journal22.R;
-import com.example.journal22.Utils;
+import com.example.journal22.UtilsMain;
 import com.example.journal22.data.entity.Entry;
 import com.example.journal22.old.NewEntryViewModel;
 import com.example.journal22.data.entity.Template;
@@ -90,25 +89,17 @@ public class new_entry extends Fragment {
 
     }
 
-    public String getFormattedDate() {
-        Date c = Calendar.getInstance().getTime();
-        Log.v("TAG","Current time => " + c);
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMMM-yyyy-EEEE-HH:mm", Locale.getDefault());
 
-        String formattedDate = df.format(c);
-        Log.v("TAG",formattedDate);
-        return formattedDate;
-    }
 
     public void createEntry(String content, String title) {
-        String formattedDate = getFormattedDate();
+        String formattedDate = UtilsMain.getFormattedDate();
         // create shared ViewModel to insert safely
         EntryViewModel mWordViewModel = new ViewModelProvider(requireActivity()).get((EntryViewModel.class));
         long journalID = mWordViewModel.currJournal.getValue();// activity.currJournal.getValue();
         if(journalID == -1){
             journalID = 1;
         }
-        long wordsCount = Utils.countWords(content);
+        long wordsCount = UtilsMain.countWords(content);
 
         Entry word = new Entry(title,content,formattedDate,journalID, wordsCount);
         mWordViewModel.insertEntry(word);

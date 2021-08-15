@@ -35,7 +35,7 @@ public interface EntryDao {
     Entry[] getAnyEntry();
 
     @Query("SELECT * FROM ENTRIES WHERE content LIKE :searchText")
-    public LiveData<List<Entry>> getDealsList(String searchText);
+    LiveData<List<Entry>> getDealsList(String searchText);
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

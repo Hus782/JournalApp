@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/haker/AndroidStudioProjects/Journal22/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.2" />
+        <entry key="..\:/Users/haker/AndroidStudioProjects/Journal22/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.2" />
         <entry key="..\:/Users/haker/AndroidStudioProjects/Journal22/app/src/main/res/drawable/today_circle_background.xml" value="0.2703125" />
         <entry key="..\:/Users/haker/AndroidStudioProjects/Journal22/app/src/main/res/layout/activity_entries.xml" value="0.1" />
         <entry key="..\:/Users/haker/AndroidStudioProjects/Journal22/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
@@ -18,9 +20,14 @@
         <entry key="..\:/Users/haker/AndroidStudioProjects/Journal22/app/src/main/res/layout/fragment_notifications.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/haker/AndroidStudioProjects/Journal22/app/src/main/res/layout/main_fragment_fragment.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/haker/AndroidStudioProjects/Journal22/app/src/main/res/layout/new_entry_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/haker/AndroidStudioProjects/Journal22/app/src/main/res/layout/search_fragment.xml" value="0.264" />
         <entry key="..\:/Users/haker/AndroidStudioProjects/Journal22/app/src/main/res/layout/template_manager_fragment.xml" value="0.1876068376068376" />
         <entry key="..\:/Users/haker/AndroidStudioProjects/Journal22/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/haker/AndroidStudioProjects/Journal22/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/haker/AndroidStudioProjects/Journal22/app/src/main/res/menu/create_entry_menu.xml" value="0.1876068376068376" />
+        <entry key="..\:/Users/haker/AndroidStudioProjects/Journal22/app/src/main/res/menu/my_menu.xml" value="0.1876068376068376" />
+        <entry key="..\:/Users/haker/AndroidStudioProjects/Journal22/app/src/main/res/menu/search_menu.xml" value="0.1876068376068376" />
+        <entry key="..\:/Users/haker/AndroidStudioProjects/Journal22/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2" />
       </map>
     </option>
   </component>

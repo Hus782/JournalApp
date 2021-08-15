@@ -3,6 +3,7 @@ package com.example.journal22;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,15 +15,11 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class display_entry extends Fragment {
 
@@ -39,6 +36,8 @@ public class display_entry extends Fragment {
 
         View root = inflater.inflate(R.layout.display_entry_fragment, container, false);
 
+        UtilsMain.hideKeyboard(getActivity());
+
 
 
         txtEntry = root.findViewById(R.id.txtEntry);
@@ -53,7 +52,7 @@ public class display_entry extends Fragment {
 
         txtEntry.setText(content);
         txtTitle.setText(title);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(Utils.changeDateFormat(date));
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(UtilsMain.changeDateFormat(date));
 
 
 

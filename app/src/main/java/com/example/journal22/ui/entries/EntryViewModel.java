@@ -48,13 +48,14 @@ public class EntryViewModel extends AndroidViewModel {
     public void deleteEntry(Entry entry) {mRepository.deleteWord(entry);}
     public void updateEntry(Entry entry) {mRepository.updateWord(entry);}
     public Entry getEntry(int position) {return mRepository.getWordAtPosition(position);}
-
+    public LiveData<List<Entry>> getFilteredEntries(String searchText){
+        String wildCard = '%' + searchText + '%';
+        return mRepository.getFilteredEntries(wildCard);
+    }
     /*
     public int getSize() {return mAllEntries.getValue().size();}
     public void delete(Entry entry) { mRepository.delete(entry); }
-    public LiveData<List<Entry>> getFilteredEntries(String searchText){
-        return mRepository.getFilteredEntries(searchText);
-    }
+
 */
 
 }

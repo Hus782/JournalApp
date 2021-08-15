@@ -21,6 +21,9 @@
             android:id="@+id/action_main_fragment_self"
             app:destination="@id/main_fragment"
             />
+        <action
+            android:id="@+id/action_main_fragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/display_entry"
@@ -65,6 +68,15 @@
         <action
             android:id="@+id/action_display_template_to_new_entry"
             app:destination="@id/new_entry" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.journal22.SearchFragment"
+        android:label="search_fragment"
+        tools:layout="@layout/search_fragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_display_entry"
+            app:destination="@id/display_entry" />
     </fragment>
 
 </navigation>

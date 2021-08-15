@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +17,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.journal22.R;
-import com.example.journal22.Utils;
+import com.example.journal22.UtilsMain;
 import com.example.journal22.data.entity.Entry;
+import com.example.journal22.ui.Constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.ParseException;
@@ -45,9 +45,9 @@ public class EditEntry extends Fragment {
         txtTitle = root.findViewById(R.id.txtEditedTitle);
         //tv.setText(getArguments().getString("amount"));
 
-        String title = getArguments().getString("EXTRA_TITLE");
-        String content = getArguments().getString("EXTRA_CONTENT");
-        String date = getArguments().getString("EXTRA_DATE");
+        String title = getArguments().getString(Constants.TITLE);
+        String content = getArguments().getString(Constants.CONTENT);
+        String date = getArguments().getString(Constants.DATE);
 
         txtEntry.setText(content);
         txtTitle.setText(title);
@@ -92,11 +92,11 @@ public class EditEntry extends Fragment {
                         txtEntry = getView().findViewById(R.id.txtEditedEntry);
                         txtTitle = getView().findViewById(R.id.txtEditedTitle);
 
-                        int id =Integer.parseInt(getArguments().getString("EXTRA_ID"));
+                        int id =Integer.parseInt(getArguments().getString(Constants.ID));
                         String title = txtTitle.getText().toString();
                         String content = txtEntry.getText().toString();
-                        String date = getArguments().getString("EXTRA_DATE");
-                        long wordsCount = Utils.countWords(content);
+                        String date = getArguments().getString(Constants.DATE);
+                        long wordsCount = UtilsMain.countWords(content);
 
                         long journalID = mWordViewModel.currJournal.getValue();// activity.currJournal.getValue();
                         if(journalID == -1){
