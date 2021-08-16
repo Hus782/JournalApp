@@ -5,6 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.journal22.Journal22;
 import com.example.journal22.data.entity.Entry;
 import com.example.journal22.data.entity.Journal;
 import com.example.journal22.data.repository.EntryRepository;
@@ -17,14 +18,13 @@ public class JournalViewModel extends AndroidViewModel {
     private EntryRepository mEntryRepository;
 
     private final LiveData<List<Journal>> mAllJournals;
-    //private final LiveData<List<Entry>> mAllEntries;
 
     public JournalViewModel (Application application) {
         super(application);
-        mJournalRepository = new JournalRepo(application);
+        //mJournalRepository = new JournalRepo(application);
+        mJournalRepository = ((Journal22) application).getJournalRepository();
         mAllJournals = mJournalRepository.getAllJournals();
         mEntryRepository = new EntryRepository(application);
-       // mAllEntries = mEntryRepository.getAllEntries();
     }
 
     public LiveData<List<Journal>> getAllJournals() { return mAllJournals; }
@@ -33,7 +33,7 @@ public class JournalViewModel extends AndroidViewModel {
     public void insert(Journal journal) { mJournalRepository.insertJournal(journal); }
     public void delete(Journal journal) {mJournalRepository.deleteJournal(journal);}
     public void update(Journal journal) {mJournalRepository.updateJournal(journal);}
-    public Entry getEntry(int position) {return mEntryRepository.getWordAtPosition(position);}
+    //public Entry getEntry(int position) {return mEntryRepository.getEntryAtPosition(position);}
 
 //
 //    public Template getTemplate(int position) {return mRepository.getTemplateAtPosition(position);}

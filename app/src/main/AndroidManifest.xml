@@ -3,7 +3,7 @@
     package="com.example.journal22">
 
     <application
-        android:name=".journal22"
+        android:name=".Journal22"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,22 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Journal22"
         >
-
-        <activity
-            android:name=".old.test"
-           ></activity>
-        <activity android:name=".old.calendar_view" />
-        <activity
-            android:name=".old.show_entry"
-            android:parentActivityName=".MainActivity">
-
-        </activity>
-        <activity
-            android:name=".old.create_entry"
-            android:parentActivityName=".MainActivity"
-            >
-        </activity>
-        <activity android:name=".data.entriesActivity" />
         <activity android:name=".MainActivity"
             android:label="@string/app_name"
 

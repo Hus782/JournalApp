@@ -1,4 +1,4 @@
-package com.example.journal22;
+package com.example.journal22.ui.search;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,8 +31,10 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.journal22.MainActivity;
+import com.example.journal22.R;
+import com.example.journal22.UtilsMain;
 import com.example.journal22.data.entity.Entry;
-import com.example.journal22.ui.Constants;
 import com.example.journal22.ui.entries.EntryListAdapter;
 import com.example.journal22.ui.entries.EntryViewModel;
 import com.example.journal22.ui.entries.RecyclerTouchListener;
@@ -57,7 +58,7 @@ public class SearchFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
-        View root =  inflater.inflate(R.layout.search_fragment, container, false);
+        View root =  inflater.inflate(R.layout.fragment_search, container, false);
 
 
         setUpRecyclerView(root);
@@ -67,27 +68,13 @@ public class SearchFragment extends Fragment {
         LiveData<List<Entry>> allEntries = Transformations.switchMap(mFilteredEntries, query ->
                         mEntryViewModel.getFilteredEntries(query)
                 );
-       // Log.v("INSIDE OBSERVER", "THE SIZE OF WORDS IS :"+ allEntries.getValue().size() );
 
         allEntries.observe(getViewLifecycleOwner(), entries -> {
 
             adapter.submitList(entries);
-            Log.v("INSIDE OBSERVER", "THE SIZE OF WORDS IS :"+ entries.size() );
-            //      Toast.makeText(root.getContext(), "THE SIZE OF WORDS IS :"+ entries.size(),
-            //          Toast.LENGTH_SHORT).show();
+      //      Log.v("INSIDE OBSERVER", "THE SIZE OF WORDS IS :"+ entries.size() );
+
         });
-
-
-        /*
-        mEntryViewModel.getAllEntries().observe(getViewLifecycleOwner(), entries -> {
-
-            adapter.submitList(entries);
-            Log.v("INSIDE OBSERVER", "THE SIZE OF WORDS IS :"+ entries.size() );
-            //      Toast.makeText(root.getContext(), "THE SIZE OF WORDS IS :"+ entries.size(),
-            //          Toast.LENGTH_SHORT).show();
-        });
-
-         */
 
         return root;
     }
@@ -134,23 +121,18 @@ public class SearchFragment extends Fragment {
                 Toast.LENGTH_SHORT).show();
 
         Entry entry = mEntryViewModel.getEntry(position);
-        int id = entry.getEntry_id();
+        String id = String.valueOf(entry.getEntry_id());
         String date = entry.getDate();
         TextView txtContent = view.findViewById(R.id.txtContent);
         String content = txtContent.getText().toString();
         TextView txtName = view.findViewById(R.id.txtName);
         String title = txtName.getText().toString();
 
-        Bundle extras = new Bundle();
-        extras.putString(Constants.ID,String.valueOf(id));
-        extras.putString(Constants.TITLE,title);
-        extras.putString(Constants.CONTENT,content);
-        extras.putString(Constants.DATE,date);
+        Bundle extras = UtilsMain.bundleUp(title, content, date, id);//new Bundle();
+
 
 
         // access parent fragment (try to)
-       // NavHostFragment navHostFragment = (NavHostFragment) getParentFragment();
-       // Fragment parent = (Fragment) navHostFragment.getParentFragment();
         Navigation.findNavController(getView()).navigate(R.id.action_searchFragment_to_display_entry, extras);
 
 

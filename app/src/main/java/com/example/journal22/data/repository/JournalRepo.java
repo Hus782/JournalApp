@@ -14,8 +14,10 @@ import com.example.journal22.data.entity.Journal;
 import java.util.List;
 
 public class JournalRepo {
+    private MyDatabase mDatabase;
     private JournalDao mJournalDao;
     private LiveData<List<Journal>> mAllJournals;
+    private static JournalRepo sInstance;
 
     public JournalRepo(Application application) {
         MyDatabase db = MyDatabase.getDatabase(application);
@@ -23,8 +25,23 @@ public class JournalRepo {
         mAllJournals = mJournalDao.getJournalList();
     }
 
-    // Room executes all queries on a separate thread.
-    // Observed LiveData will notify the observer when the data has changed.
+    public JournalRepo(final MyDatabase database) {
+        mDatabase = database;
+        mJournalDao = mDatabase.journalDao();
+        mAllJournals = mJournalDao.getJournalList();
+
+    }
+    public static JournalRepo getInstance(final MyDatabase database) {
+        if (sInstance == null) {
+            synchronized (EntryRepository.class) {
+                if (sInstance == null) {
+                    sInstance = new JournalRepo(database);
+                }
+            }
+        }
+        return sInstance;
+    }
+
     public LiveData<List<Journal>> getAllJournals() {
         return mAllJournals;
     }
@@ -35,20 +52,17 @@ public class JournalRepo {
 
     public void insertJournal(Journal journal)  {
         new JournalRepo.insertJournalAsyncTask(mJournalDao).execute(journal);
-        Log.v("TAG", "Called del here");
 
     }
 
     public void deleteJournal(Journal journal)  {
         new JournalRepo.deleteJournalAsyncTask(mJournalDao).execute(journal);
-        Log.v("TAG", "Called del here");
 
     }
 
 
     public void updateJournal(Journal journal)  {
         new JournalRepo.updateJournalAsyncTask(mJournalDao).execute(journal);
-        Log.v("TAG", "Called del here");
 
     }
 

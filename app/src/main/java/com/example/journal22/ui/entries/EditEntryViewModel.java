@@ -8,8 +8,5 @@ public class EditEntryViewModel extends ViewModel {
     // TODO: Implement the ViewModel
 
 
-    public void onClick(int id, String title, String content, String date) {
-
-    }
 }
 

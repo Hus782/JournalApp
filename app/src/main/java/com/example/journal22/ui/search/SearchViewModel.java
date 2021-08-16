@@ -1,4 +1,4 @@
-package com.example.journal22;
+package com.example.journal22.ui.search;
 
 import androidx.lifecycle.ViewModel;
 

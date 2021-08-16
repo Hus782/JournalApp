@@ -3,18 +3,12 @@ package com.example.journal22.ui.entries;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.PopupMenu;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,10 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.journal22.MainActivity;
 import com.example.journal22.R;
 import com.example.journal22.UtilsMain;
-import com.example.journal22.data.JournalViewModel;
-import com.example.journal22.old.create_entry;
 import com.example.journal22.data.entity.Entry;
-import com.example.journal22.ui.Constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
@@ -47,13 +38,9 @@ public class EntriesFragment extends Fragment {
     //MyRecyclerViewAdapter adapter;
 
     private EntryViewModel mEntryViewModel;
-    private JournalViewModel mJournalViewModel;
-
-    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
     private RecyclerView recyclerView;
     private EntryListAdapter adapter;
-    private EntriesViewModel homeViewModel;
     private FloatingActionButton add_btn;
     private TextView txtUsername, txtTodayDate, txtStreak, txtTotalDays, txtTotalEntries;
 
@@ -65,8 +52,6 @@ public class EntriesFragment extends Fragment {
         // create toolbar options
       //  setHasOptionsMenu(true);
 
-        homeViewModel =
-                new ViewModelProvider(this).get(EntriesViewModel.class);
         View root = inflater.inflate(R.layout.fragment_entries, container, false);
 
         UtilsMain.hideKeyboard(getActivity());
@@ -103,7 +88,7 @@ public class EntriesFragment extends Fragment {
 
               adapter.submitList(entries);
             txtTotalEntries.setText(String.format("%d entries", entries.size()));
-            Log.v("INSIDE OBSERVER", "THE SIZE OF WORDS IS :"+ entries.size() );
+          //  Log.v("INSIDE OBSERVER", "THE SIZE OF WORDS IS :"+ entries.size() );
           //      Toast.makeText(root.getContext(), "THE SIZE OF WORDS IS :"+ entries.size(),
           //          Toast.LENGTH_SHORT).show();
         });
@@ -114,16 +99,11 @@ public class EntriesFragment extends Fragment {
 
     public void setUpRecyclerView(View root) {
 
-
-        //entries stuff
         recyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-
         adapter = new EntryListAdapter(new EntryListAdapter.WordDiff());
-
         recyclerView.setAdapter(adapter);
-
         DividerItemDecoration itemDecoration = new
                 DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         //itemDecoration.setDrawable(new ColorDrawable(R.color.black));
@@ -143,7 +123,6 @@ public class EntriesFragment extends Fragment {
                 showOptionsDialog(root, view, position);
             }
 
-
         }));
 
     }
@@ -154,19 +133,14 @@ public class EntriesFragment extends Fragment {
                 Toast.LENGTH_SHORT).show();
 
         Entry entry = mEntryViewModel.getEntry(position);
-        int id = entry.getEntry_id();
+        String id = String.valueOf(entry.getEntry_id());
         String date = entry.getDate();
         TextView txtContent = view.findViewById(R.id.txtContent);
         String content = txtContent.getText().toString();
         TextView txtName = view.findViewById(R.id.txtName);
         String title = txtName.getText().toString();
 
-        Bundle extras = new Bundle();
-        extras.putString(Constants.ID,String.valueOf(id));
-        extras.putString(Constants.TITLE,title);
-        extras.putString(Constants.CONTENT,content);
-        extras.putString(Constants.DATE,date);
-
+        Bundle extras = UtilsMain.bundleUp(title, content, date, id);//new Bundle();
 
         // access parent fragment (try to)
         NavHostFragment navHostFragment = (NavHostFragment) getParentFragment();
@@ -226,9 +200,8 @@ public class EntriesFragment extends Fragment {
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button
-                Entry myWord = mEntryViewModel.getEntry(position);
-                //Log.v("Got content mate", myWord.getContent());
-                mEntryViewModel.deleteEntry(myWord);
+                Entry myEntry = mEntryViewModel.getEntry(position);
+                mEntryViewModel.deleteEntry(myEntry);
                 Toast.makeText(context, "Item deleted!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -249,12 +222,10 @@ public class EntriesFragment extends Fragment {
         switch (item.getItemId()) {
 
             case R.id.action_settings:
-                // User chose the "Settings" item, show the app settings UI...
                 Toast.makeText(getContext(), "Nothing happened!", Toast.LENGTH_SHORT).show();
 
                 return true;
             case R.id.action_template:
-                // User chose the "Settings" item, show the app settings UI...
                 Toast.makeText(getContext(), "Templates showing!", Toast.LENGTH_SHORT).show();
 
                 return true;
@@ -266,73 +237,6 @@ public class EntriesFragment extends Fragment {
 
         }
     }
-
-/*
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.v(TAG, "we in main activity");
-
-        if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            String title = extras.getString("EXTRA_TITLE");
-            String content = extras.getString("EXTRA_CONTENT");
-            String date = extras.getString("EXTRA_DATE");
-
-            Log.v(TAG, "we in main activity again");
-
-            Log.v(TAG, title);
-
-            Log.v(TAG, content);
-
-            Entry word = new Entry(title,content,date);
-            mWordViewModel.insert(word);
-        } /*else {
-            Toast.makeText(
-                    getApplicationContext(),
-                    "Oops",
-                    Toast.LENGTH_LONG).show();
-        }*/
-
-
-/*
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-
-        inflater.inflate(R.menu.my_menu, menu) ;
-
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-/*
-        SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                if (s != null) {
-
-                    //Log.v(TAG, mWordViewModel.getFilteredEntries(s).toString());
-
-                }
-
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                //searchReceived(s);
-                //Log.v(TAG, mWordViewModel.getFilteredEntries(s).toString());
-
-                return true;
-            }
-        });
-
-
-    }
-
-
-
- */
-
-
+    
 }
 

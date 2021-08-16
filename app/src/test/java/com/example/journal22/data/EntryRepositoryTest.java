@@ -1,21 +1,16 @@
 package com.example.journal22.data;
 
-import static com.example.journal22.data.TestData.ENTRY_ENTITY;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-
-import android.app.Application;
-
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.journal22.LiveDataTestUtil;
 import com.example.journal22.data.dao.EntryDao;
 import com.example.journal22.data.entity.Entry;
 import com.example.journal22.data.repository.EntryRepository;
-import com.example.journal22.ui.entries.EntryViewModel;
+
+import static com.example.journal22.data.TestData.ENTRY_ENTITY;
+import static org.hamcrest.CoreMatchers.is;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -30,9 +25,10 @@ import org.mockito.stubbing.Answer;
 import java.util.ArrayList;
 import java.util.List;
 
-@RunWith(JUnit4.class)
+import static org.junit.Assert.*;
 
-public abstract class EntryRepositoryTest {
+@RunWith(JUnit4.class)
+public class EntryRepositoryTest {
     @Rule
     public InstantTaskExecutorRule instantExecutorRule = new InstantTaskExecutorRule();
 
@@ -42,9 +38,8 @@ public abstract class EntryRepositoryTest {
     @Mock
     private MyDatabase myDatabase;
 
-    private static EntryRepository mEntryRepository;
 
-
+    private EntryRepository mEntryRepository;
     private List<Entry> mAllEntriesList = new ArrayList<Entry>();
     private MutableLiveData<List<Entry>> mAllEntries = new MutableLiveData<List<Entry>>(mAllEntriesList);
 
@@ -52,7 +47,7 @@ public abstract class EntryRepositoryTest {
     @Before
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        mEntryRepository = new EntryRepository(myDatabase);
+        mEntryRepository = new EntryRepository(mEntryDao);
         initMock();
         // mEntryViewModel.getAllWords().observeForever(mockObserver);
     }
@@ -63,14 +58,20 @@ public abstract class EntryRepositoryTest {
             mAllEntries.postValue(mAllEntriesList);
             return null;
         }).when(mEntryDao).insertEntry(any());
+
+        Mockito.doAnswer(
+                (Answer<LiveData<List<Entry>>>) invocation -> mAllEntries)
+                .when(mEntryDao).getEntryListAll();
     }
 
 
+
     @Test
-    public void getEntriesTest() throws InterruptedException {
+    public void insertTest()  {
        // List<Entry> all_entries = LiveDataTestUtil.getValue(mEntryViewModel.getAllEntries());
        // Mockito.verify(mEntryRepository, times(2)).getAllEntries();
-        assertTrue(1==1);
+        mEntryRepository.insertEntryTask(ENTRY_ENTITY);
+      assertEquals(mEntryDao, null);
 
     }
 

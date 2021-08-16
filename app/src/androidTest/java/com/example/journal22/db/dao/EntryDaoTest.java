@@ -1,11 +1,8 @@
 package com.example.journal22.db.dao;
 
-import android.content.Context;
-
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.journal22.data.MyDatabase;
@@ -54,7 +51,7 @@ public class EntryDaoTest {
                 .allowMainThreadQueries()
                 .build();
 
-        mEntryDao = mDatabase.myDao();
+        mEntryDao = mDatabase.entryDao();
     }
     @After
     public void closeDb() throws Exception {

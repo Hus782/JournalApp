@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer;
 
 import com.example.journal22.LiveDataTestUtil;
 import com.example.journal22.Utils;
-import com.example.journal22.UtilsMain;
 import com.example.journal22.data.entity.Entry;
 import com.example.journal22.data.repository.EntryRepository;
 import com.example.journal22.ui.entries.EntryViewModel;
@@ -58,19 +57,19 @@ public class EntryViewModelTest {
             mAllEntriesList.add(ENTRY_ENTITY);
             mAllEntries.postValue(mAllEntriesList);
             return null;
-        }).when(mEntryRepository).insertWord(any());
+        }).when(mEntryRepository).insertEntryTask(any());
 
         Mockito.doAnswer((Answer<Void>) invocation -> {
             mAllEntriesList.set(0,ENTRY_EDITED);
             mAllEntries.postValue(mAllEntriesList);
             return null;
-        }).when(mEntryRepository).updateWord(any());
+        }).when(mEntryRepository).updateEntryTask(any());
 
         Mockito.doAnswer((Answer<Void>) invocation -> {
             mAllEntriesList.remove(0);
             mAllEntries.postValue(mAllEntriesList);
             return null;
-        }).when(mEntryRepository).deleteWord(any());
+        }).when(mEntryRepository).deleteEntryTask(any());
 
 
         Mockito.doAnswer(
@@ -119,7 +118,7 @@ public class EntryViewModelTest {
     @Test
     public void insertEntryTest() throws Exception {
         mEntryViewModel.insertEntry(ENTRY_ENTITY);
-        Mockito.verify(mEntryRepository).insertWord(ENTRY_ENTITY);
+        Mockito.verify(mEntryRepository).insertEntryTask(ENTRY_ENTITY);
         List<Entry> all_entries = LiveDataTestUtil.getValue(mEntryViewModel.getAllEntries());
         assertEquals(all_entries.size(), 1);
         assertTrue(Utils.compareEntries(all_entries.get(0), ENTRY_ENTITY));
@@ -133,9 +132,9 @@ public class EntryViewModelTest {
     @Test
     public void updateEntryTest() throws InterruptedException {
         mEntryViewModel.insertEntry(ENTRY_ENTITY);
-        Mockito.verify(mEntryRepository).insertWord(ENTRY_ENTITY);
+        Mockito.verify(mEntryRepository).insertEntryTask(ENTRY_ENTITY);
         mEntryViewModel.updateEntry(ENTRY_EDITED);
-        Mockito.verify(mEntryRepository).updateWord(ENTRY_EDITED);
+        Mockito.verify(mEntryRepository).updateEntryTask(ENTRY_EDITED);
 
         List<Entry> all_entries = LiveDataTestUtil.getValue(mEntryViewModel.getAllEntries());
         assertTrue(Utils.compareEntries(all_entries.get(0), ENTRY_EDITED));
@@ -146,9 +145,9 @@ public class EntryViewModelTest {
     @Test
     public void deleteEntryTest() throws InterruptedException {
         mEntryViewModel.insertEntry(ENTRY_ENTITY);
-        Mockito.verify(mEntryRepository).insertWord(ENTRY_ENTITY);
+        Mockito.verify(mEntryRepository).insertEntryTask(ENTRY_ENTITY);
         mEntryViewModel.deleteEntry(ENTRY_ENTITY);
-        Mockito.verify(mEntryRepository).deleteWord(ENTRY_ENTITY);
+        Mockito.verify(mEntryRepository).deleteEntryTask(ENTRY_ENTITY);
         List<Entry> all_entries = LiveDataTestUtil.getValue(mEntryViewModel.getAllEntries());
 
         assertTrue(all_entries.isEmpty());

@@ -22,7 +22,7 @@ import java.util.concurrent.Executors;
 
 @Database(entities = {Entry.class, Template.class, Journal.class}, version = 13,  exportSchema = false)
 public abstract class MyDatabase extends RoomDatabase {
-        public abstract EntryDao myDao();
+        public abstract EntryDao entryDao();
     public abstract TemplateDao templateDao();
     public abstract JournalDao journalDao();
 
@@ -31,14 +31,6 @@ public abstract class MyDatabase extends RoomDatabase {
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();
-
-    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
-        @Override
-        public void migrate(SupportSQLiteDatabase database) {
-            // Since we didn't alter the table, there's nothing else to do here.
-        }
-    };
 
     public static MyDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
@@ -47,9 +39,7 @@ public abstract class MyDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             MyDatabase.class, "entries_database")
                             .addCallback(sRoomDatabaseCallback)
-                            //.addMigrations(MIGRATION_1_2)
                             .fallbackToDestructiveMigration()
-
 //                            .allowMainThreadQueries()
 
                             .build();

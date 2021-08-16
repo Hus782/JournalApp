@@ -1,18 +1,14 @@
 package com.example.journal22.db.dao;
 
-import android.util.Log;
-
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.example.journal22.data.JournalAndEntries;
 import com.example.journal22.data.JournalCount;
 import com.example.journal22.data.MyDatabase;
 import com.example.journal22.data.dao.EntryDao;
 import com.example.journal22.data.dao.JournalDao;
-import com.example.journal22.data.entity.Entry;
 import com.example.journal22.data.entity.Journal;
 import com.example.journal22.db.LiveDataTestUtil;
 import com.example.journal22.db.Utils;
@@ -26,7 +22,6 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
-import static com.example.journal22.db.dao.TestData.ENTRY_EDITED;
 import static com.example.journal22.db.dao.TestData.*;
 import static com.example.journal22.db.dao.TestData.JOURNAL_EDITED;
 import static com.example.journal22.db.dao.TestData.JOURNAL_ENTITY;
@@ -100,7 +95,7 @@ public class JournalDaoTest {
         mJournalDao.createJournal(JOURNAL_ENTITY);
         mJournalDao.createJournal(JOURNAL_ENTITY2);
 
-        EntryDao mEntryDao = mDatabase.myDao();
+        EntryDao mEntryDao = mDatabase.entryDao();
         mEntryDao.insertEntry(ENTRY_ENTITY);
         mEntryDao.insertEntry(ENTRY_ENTITY3);
 

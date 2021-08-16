@@ -6,7 +6,7 @@
     app:startDestination="@id/main_fragment">
     <fragment
         android:id="@+id/main_fragment"
-        android:name="com.example.journal22.main_fragment"
+        android:name="com.example.journal22.MainFragment"
         android:label="Journal" >
         <action
             android:id="@+id/action_main_fragment_to_display_entry"
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/display_entry"
-        android:name="com.example.journal22.display_entry"
+        android:name="com.example.journal22.ui.entries.ShowEntryFragment"
         android:label="display_entry" >
         <action
             android:id="@+id/action_display_entry_to_editEntry"
@@ -35,45 +35,45 @@
     </fragment>
     <fragment
         android:id="@+id/new_entry"
-        android:name="com.example.journal22.ui.entries.new_entry"
+        android:name="com.example.journal22.ui.entries.CreateEntryFragment"
         android:label="Write something"
-        tools:layout="@layout/new_entry_fragment">
+        tools:layout="@layout/fragment_new_entry">
         <action
             android:id="@+id/action_new_entry_to_main_fragment"
             app:destination="@id/main_fragment" />
     </fragment>
     <fragment
         android:id="@+id/template_manager"
-        android:name="com.example.journal22.ui.templates.template_manager"
+        android:name="com.example.journal22.ui.templates.TemplateManagerFragment"
         android:label="template_manager_fragment"
-        tools:layout="@layout/template_manager_fragment" >
+        tools:layout="@layout/fragment_template_manager" >
         <action
             android:id="@+id/action_template_manager_to_display_template"
             app:destination="@id/display_template" />
     </fragment>
     <fragment
         android:id="@+id/editEntry"
-        android:name="com.example.journal22.ui.entries.EditEntry"
+        android:name="com.example.journal22.ui.entries.EditEntryFragment"
         android:label="edit_entry_fragment"
-        tools:layout="@layout/edit_entry_fragment" >
+        tools:layout="@layout/fragment_edit_entry" >
         <action
             android:id="@+id/action_editEntry_to_main_fragment"
             app:destination="@id/main_fragment" />
     </fragment>
     <fragment
         android:id="@+id/display_template"
-        android:name="com.example.journal22.ui.templates.display_template"
+        android:name="com.example.journal22.ui.templates.ShowTemplateFragment"
         android:label="display_template_fragment"
-        tools:layout="@layout/display_template_fragment" >
+        tools:layout="@layout/fragment_display_template" >
         <action
             android:id="@+id/action_display_template_to_new_entry"
             app:destination="@id/new_entry" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.journal22.SearchFragment"
+        android:name="com.example.journal22.ui.search.SearchFragment"
         android:label="search_fragment"
-        tools:layout="@layout/search_fragment" >
+        tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_searchFragment_to_display_entry"
             app:destination="@id/display_entry" />
