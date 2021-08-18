@@ -9,6 +9,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="MyTeal">#44c0fe</color>
     <color name="grey">#8F8684</color>
+    <color name="black_200">#303030</color>
+    <color name="black_500">#0f0f0f</color>
+
+
+
 
 
 </resources>

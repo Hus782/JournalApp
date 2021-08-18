@@ -3,6 +3,7 @@ package com.example.journal22.ui.entries;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -49,6 +51,9 @@ public class EditEntryFragment extends Fragment {
         txtTitle.setText(title);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(UtilsMain.changeDateFormat(date));
 
+        txtEntry.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
         return root;
     }
 

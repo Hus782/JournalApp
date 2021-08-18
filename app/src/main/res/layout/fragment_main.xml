@@ -12,10 +12,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
+        app:backgroundTint="@color/MyTeal"
+
         app:itemIconTint="@color/black"
         app:itemTextColor="@color/black"
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:labelVisibilityMode="labeled"
+
         app:menu="@menu/bottom_nav_menu" />
 
     <fragment

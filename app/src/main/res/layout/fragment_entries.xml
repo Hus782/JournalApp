@@ -25,18 +25,21 @@
         android:id="@+id/userPic"
         android:layout_width="50dp"
         android:layout_height="45dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="36dp"
+        android:src="@drawable/user"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="16dp"
-        tools:srcCompat="@drawable/user" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
-        android:text="Hus mate"
+        android:layout_marginTop="36dp"
+        android:text="Hi User"
+        android:textColor="@color/white"
+        android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@+id/userPic"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,8 +48,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/noto_sans"
         android:text="2021/1/14"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/userPic"
         app:layout_constraintTop_toBottomOf="@+id/txtUsername" />
 
@@ -54,10 +60,10 @@
         android:id="@+id/txtTotalEntries"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginBottom="56dp"
         android:text="4 entries"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -65,9 +71,10 @@
         android:id="@+id/txtTotalDays"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="56dp"
         android:text="4 days"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView"
         app:layout_constraintStart_toEndOf="@+id/txtTotalEntries" />
 
@@ -75,23 +82,25 @@
         android:id="@+id/txtStreak"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginTop="128dp"
-        android:text="0 streak"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="170dp"
         app:layout_constraintStart_toEndOf="@+id/txtTotalDays"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_entry_btn"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginBottom="116dp"
         android:clickable="true"
+        app:backgroundTint="@color/white"
+        app:elevation="6dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/btn_star_big_on" />
+        android:src="@drawable/outline_add_black_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

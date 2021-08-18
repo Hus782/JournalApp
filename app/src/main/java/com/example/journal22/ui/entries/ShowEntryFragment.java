@@ -66,7 +66,7 @@ public class ShowEntryFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         Bundle extras = UtilsMain.bundleUp(title, content, date, id);//new Bundle();
-                        Toast.makeText(getContext(), content, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), content, Toast.LENGTH_SHORT).show();
                         Navigation.findNavController(view).navigate(R.id.action_display_entry_to_editEntry,extras);
 
                     }

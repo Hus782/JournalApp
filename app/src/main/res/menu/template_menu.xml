@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/action_use"
-        android:icon="@android:drawable/checkbox_on_background"
+        android:icon="@drawable/outline_done_black_24dp"
         android:title="Use"
         app:showAsAction="ifRoom" />
 

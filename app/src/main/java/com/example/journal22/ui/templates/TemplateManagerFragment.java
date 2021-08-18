@@ -118,9 +118,12 @@ public class TemplateManagerFragment extends Fragment {
 
     public void showTemplate(final int position) {
         //Values are passing to activity & to fragment as well
+       /*
         Toast.makeText(getContext(), "Single Click on position:  " + position,
                 Toast.LENGTH_SHORT).show();
 
+
+        */
         Template temp = mTemplateViewModel.getTemplate(position);
         String id = String.valueOf(temp.getTemplate_id());
         String title = temp.getTitle();

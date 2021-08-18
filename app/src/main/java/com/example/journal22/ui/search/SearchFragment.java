@@ -70,10 +70,7 @@ public class SearchFragment extends Fragment {
                 );
 
         allEntries.observe(getViewLifecycleOwner(), entries -> {
-
             adapter.submitList(entries);
-      //      Log.v("INSIDE OBSERVER", "THE SIZE OF WORDS IS :"+ entries.size() );
-
         });
 
         return root;

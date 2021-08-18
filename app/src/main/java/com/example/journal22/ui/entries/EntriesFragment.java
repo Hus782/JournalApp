@@ -88,7 +88,7 @@ public class EntriesFragment extends Fragment {
 
               adapter.submitList(entries);
             txtTotalEntries.setText(String.format("%d entries", entries.size()));
-          //  Log.v("INSIDE OBSERVER", "THE SIZE OF WORDS IS :"+ entries.size() );
+
           //      Toast.makeText(root.getContext(), "THE SIZE OF WORDS IS :"+ entries.size(),
           //          Toast.LENGTH_SHORT).show();
         });
@@ -129,9 +129,12 @@ public class EntriesFragment extends Fragment {
 
     public void showEntry(View view, final int position) {
         //Values are passing to activity & to fragment as well
+      /*
         Toast.makeText(view.getContext(), "Single Click on position        :"+position,
                 Toast.LENGTH_SHORT).show();
 
+
+       */
         Entry entry = mEntryViewModel.getEntry(position);
         String id = String.valueOf(entry.getEntry_id());
         String date = entry.getDate();
