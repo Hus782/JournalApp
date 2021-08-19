@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.search.SearchFragment">
-
+<!--
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggleButton"
         android:layout_width="wrap_content"
@@ -36,11 +36,10 @@
         style="@style/Widget.App.Button.OutlinedButton.IconOnly"
         />
     </com.google.android.material.button.MaterialButtonToggleGroup>
-
+-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:background="@color/grey"
         android:layout_height="match_parent"
         app:layout_constraintTop_toBottomOf="@+id/toggleButton"
         />

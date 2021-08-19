@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.journal22.R;
+import com.example.journal22.UtilsMain;
 import com.example.journal22.ui.Constants;
 
 public class ShowTemplateFragment extends Fragment {
@@ -51,6 +53,7 @@ public class ShowTemplateFragment extends Fragment {
 
         txtContent.setText(content);
         txtTitle.setText(title);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(title);
 
         return root;
     }
