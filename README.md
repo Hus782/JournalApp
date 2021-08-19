@@ -2,8 +2,7 @@
  A simple Journaling app for Android written in Java
 
 ### Screenshots
-![Image1](screenshots/Image11.jpg)
-<img src="screenshots/Image11.jpg" width="40%" height="40%">
+<img src="screenshots/Image1.jpg" width="20%" height="20%">
 
 Single-activity structure with MVVM architecture.
 
