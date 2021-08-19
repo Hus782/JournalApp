@@ -3,6 +3,9 @@
 
 ### Screenshots
 <img src="screenshots/Image1.jpg" width="20%" height="20%">
+<img src="screenshots/Image2.jpg" width="20%" height="20%">
+<img src="screenshots/Image3.jpg" width="20%" height="20%">
+<img src="screenshots/Image4.jpg" width="20%" height="20%">
 
 Single-activity structure with MVVM architecture.
 
