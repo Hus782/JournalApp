@@ -3,7 +3,7 @@
 
 ### Screenshots
 ![Image1](screenshots/Image11.jpg)
-<img src="screenshots/Image11.jpg" width="40" height="100">
+<img src="screenshots/Image11.jpg" width="40%" height="40%">
 
 Single-activity structure with MVVM architecture.
 
