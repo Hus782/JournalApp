@@ -3,7 +3,7 @@
     <group
         android:id="@+id/group1"
         android:checkableBehavior="none">
-<!-- -->
+
         <item
             android:id="@+id/template_manager"
             android:icon="@drawable/ic_home_black_24dp"
@@ -15,7 +15,7 @@
             android:title="Create Entry" />
 
     </group>
-
+    <!--
     <group
         android:id="@+id/group2"
         android:checkableBehavior="none">
@@ -36,5 +36,6 @@
             </menu>
         </item>
     </group>
+     -->
 
 </menu>

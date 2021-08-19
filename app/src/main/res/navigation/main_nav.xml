@@ -45,8 +45,8 @@
     <fragment
         android:id="@+id/template_manager"
         android:name="com.example.journal22.ui.templates.TemplateManagerFragment"
-        android:label="template_manager_fragment"
-        tools:layout="@layout/fragment_template_manager" >
+        android:label="Templates"
+        tools:layout="@layout/fragment_template_manager">
         <action
             android:id="@+id/action_template_manager_to_display_template"
             app:destination="@id/display_template" />
