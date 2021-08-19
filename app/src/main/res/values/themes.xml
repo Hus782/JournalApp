@@ -12,23 +12,33 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryDark</item>
         <!-- Customize your theme here. -->
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
 
-    </style>
-
-    <style name="Theme.Journal22.NoActionBar" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-
-    </style>
+               <item name="android:windowBackground">@color/MyTeal</item>
 
 
-    <style name="ToolbarTheme" parent="ThemeOverlay.MaterialComponents.Dark">
+               <item name="windowActionBar">false</item>
+               <item name="windowNoTitle">true</item>
+
+               <item name="android:listDivider">@color/purple_500</item>
+
+           </style>
+
+           <style name="Theme.Journal22.NoActionBar" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+
+               <item name="windowNoTitle">true</item>
+               <item name="windowActionBar">false</item>
+               <item name="android:windowFullscreen">true</item>
+               <item name="android:windowContentOverlay">@null</item>
+
+           </style>
 
 
-    </style>
-</resources>
+           <style name="ToolbarTheme" parent="ThemeOverlay.MaterialComponents.Dark">
+               <item name="android:textColorPrimary">@android:color/black</item>
+               <item name="android:background">@color/white</item>
+
+               <item name="actionMenuTextColor">@color/black</item>
+               <item name="colorControlNormal">@color/black</item>
+
+           </style>
+       </resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="none">
+<!-- -->
+        <item
+            android:id="@+id/template_manager"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Templates"
+            android:checked="true" />
+        <item
+            android:id="@+id/new_entry"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Create Entry" />
+
+    </group>
+
+    <group
+        android:id="@+id/group2"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/subtitle"
+            android:title="Subtitle">
+            <menu>
+                <item
+                    android:id="@+id/item4"
+                    android:icon="@drawable/ic_home_black_24dp"
+                    android:title="Item 4" />
+
+                <item
+                    android:id="@+id/item5"
+                    android:icon="@drawable/ic_home_black_24dp"
+                    android:title="Item 5" />
+
+            </menu>
+        </item>
+    </group>
+
+</menu>

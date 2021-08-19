@@ -6,4 +6,10 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="open">Open</string>
+    <string name="closed">Closed</string>
+
+    <string name="hint">hint</string>
+    <string name="label">label</string>
+
 </resources>
