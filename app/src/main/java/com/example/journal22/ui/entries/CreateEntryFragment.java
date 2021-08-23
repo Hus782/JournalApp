@@ -94,6 +94,7 @@ public class CreateEntryFragment extends Fragment {
 
     public void createEntry(String content, String title) {
         String formattedDate = UtilsMain.getFormattedDate();
+        String time = UtilsMain.getFormattedTime();
         // create shared ViewModel to insert safely
         EntryViewModel mEntryViewModel = new ViewModelProvider(requireActivity()).get((EntryViewModel.class));
         long journalID = mEntryViewModel.getCurrJournal().getValue();// activity.currJournal.getValue();
@@ -102,7 +103,7 @@ public class CreateEntryFragment extends Fragment {
         }
         long wordsCount = UtilsMain.countWords(content);
 
-        Entry word = new Entry(title,content,formattedDate,journalID, wordsCount);
+        Entry word = new Entry(title,content,formattedDate,time,journalID, wordsCount);
         mEntryViewModel.insertEntry(word);
 
         Toast.makeText(getContext(), "Entry Added", Toast.LENGTH_SHORT).show();

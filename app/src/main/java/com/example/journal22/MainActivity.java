@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
     private DrawerLayout drawerLayout;
     private NavigationView navView;
     private NavController navController;
-
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,27 +66,28 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
 
 
     }
-
+    public Menu getMenu() {
+        return menu;
+    }
     public void setMenu() {
         JournalViewModel viewModel = new ViewModelProvider(this).get(JournalViewModel.class);
         EntryViewModel mEntryViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication())).get(EntryViewModel.class);
-        final Menu menu = navView.getMenu();
-        viewModel.getAllJournals().observe(this, item -> {
-            //List<Journal> AllJournals = item;
-            //journals = item;
+        menu = navView.getMenu();
+        viewModel.getJournalsAndCount().observe(this, item -> {
 
             int journSize = item.size();
-            Log.v(TAG, String.valueOf(journSize));
-            Log.v(TAG, "Updating Journals and items and stuff");
+          //  Log.v(TAG, String.valueOf(journSize));
+         //   Log.v(TAG, "Updating Journals and items and stuff");
 
             //Toast.makeText(this, journSize, Toast.LENGTH_SHORT).show();
 
             menu.removeGroup(3);
-            menu.add(3, R.id.all_journals,Menu.NONE,"All ").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            menu.add(3, -1,Menu.NONE,"All ").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     mEntryViewModel.setCurrJournal(-1);
+                    drawerLayout.close();
                     return true;
                 }
             });
@@ -101,20 +102,32 @@ public class MainActivity extends AppCompatActivity {//implements EntryListAdapt
             });
 
             for (int i = 0; i < journSize; i++) {
-                int id = item.get(i).getJournal_id();
-                String title = item.get(i).getTitle();
+                int id = item.get(i).journal.getJournal_id();
+                String title = item.get(i).journal.getTitle() + " (" + item.get(i).entries_count + ")";
                 if(menu.findItem(id)==null){
                     menu.add(3, id,Menu.NONE,title).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                         //menu.add(3, id,Menu.NONE,title).setCheckable(true).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-                            Log.v(TAG, String.valueOf("Clicked "  + id));
-                            SpannableString s = new SpannableString(title);
-                            s.setSpan(new ForegroundColorSpan(Color.RED), 0, s.length(), 0);
+   //                         Log.v(TAG, String.valueOf("Clicked "  + id));
+/*
+                            for (int i = 0; i < menu.size(); i++) {
+                                Log.v("onMenuItemClick", menu.getItem(i).getTitle().toString());
+
+                                SpannableString s = new SpannableString(menu.getItem(i).getTitle().toString());
+                                s.setSpan(new ForegroundColorSpan(Color.BLACK), 0, s.length(), 0);
+                                menu.findItem(i).setTitle(s);
+
+
+
+                            }
+*/
+                        //    SpannableString s = new SpannableString(title);
+                        //    s.setSpan(new ForegroundColorSpan(Color.RED), 0, s.length(), 0);
                             //currJournal.setValue(id);
-                            // menu.findItem(id).setTitle(s);
-                            menu.findItem(id).setChecked(true);
+                         //    menu.findItem(id).setTitle(s);
+                            //menu.findItem(id).setChecked(true);
                             //navView.setCheckedItem(id);
                             //      navController.navigate(R.id.action_main_fragment_self);
                             //mEntryViewModel.currJournal.setValue(id);

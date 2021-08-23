@@ -71,6 +71,10 @@ public class EntryRepository{
         return     mAllEntries.getValue().get(position);
     }
 
+    public LiveData<List<String>> getEntryDays() {
+        return mEntryDao.getAllEntryDays();
+    }
+
     public LiveData<List<Entry>> getFilteredEntries(String searchText){
         return mEntryDao.getDealsList(searchText);
     }

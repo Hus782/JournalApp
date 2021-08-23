@@ -51,6 +51,8 @@ public class EntryViewModel extends AndroidViewModel {
         String wildCard = '%' + searchText + '%';
         return mRepository.getFilteredEntries(wildCard);
     }
+    public LiveData<List<String>> getDays() { return mRepository.getEntryDays(); }
+
 
     public MutableLiveData<Integer> getCurrJournal() { return currJournal; }
     public void setCurrJournal(int currJournal) {  this.currJournal.setValue(currJournal); }

@@ -17,11 +17,12 @@ import java.util.Locale;
 
 public class UtilsMain {
 
-    public static Bundle bundleUp(String title, String content, String date, String id) {
+    public static Bundle bundleUp(String title, String content, String date, String time, String id) {
         Bundle extras = new Bundle();
         extras.putString(Constants.TITLE,title);
         extras.putString(Constants.CONTENT,content);
         extras.putString(Constants.DATE,date);
+        extras.putString(Constants.TIME,time);
         extras.putString(Constants.ID,id);
         return extras;
     }
@@ -29,12 +30,22 @@ public class UtilsMain {
     public static String getFormattedDate() {
         Date c = Calendar.getInstance().getTime();
         //Log.v("TAG","Current time => " + c);
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMMM-yyyy-EEEE-HH:mm", Locale.getDefault());
+        SimpleDateFormat df = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.getDefault());
 
         String formattedDate = df.format(c);
       //  Log.v("TAG",formattedDate);
         return formattedDate;
     }
+    public static String getFormattedTime() {
+        Date c = Calendar.getInstance().getTime();
+        //Log.v("TAG","Current time => " + c);
+        SimpleDateFormat df = new SimpleDateFormat(Constants.TIME_FORMAT, Locale.getDefault());
+
+        String formattedDate = df.format(c);
+        //  Log.v("TAG",formattedDate);
+        return formattedDate;
+    }
+
     public static void hideKeyboard(Activity activity) {
         //Check if any views have focus and if no then hide keyboard
         View view = activity.getCurrentFocus();
@@ -46,7 +57,7 @@ public class UtilsMain {
 
 
     public static String changeDateFormat(String date){
-        SimpleDateFormat format = new SimpleDateFormat("dd-MMMM-yyyy-EEEE-HH:mm", Locale.getDefault());
+        SimpleDateFormat format = new SimpleDateFormat(Constants.TIME_FORMAT, Locale.getDefault());
         Date mydate;
         try {
             mydate = format.parse(date);

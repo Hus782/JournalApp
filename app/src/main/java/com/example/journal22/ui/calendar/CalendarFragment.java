@@ -58,7 +58,7 @@ public class CalendarFragment extends Fragment {
         CalendarView calendarView = (CalendarView) root.findViewById(R.id.mCalendarView);
 
 
-        mWordViewModel.getAllEntries().observe(getViewLifecycleOwner(), words -> {
+        mWordViewModel.getDays().observe(getViewLifecycleOwner(), words -> {
             List<EventDay> events = calendarViewModel.getCalendars(words);
             calendarView.setEvents(events);
 

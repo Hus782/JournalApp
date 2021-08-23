@@ -87,6 +87,8 @@ public class EditEntryFragment extends Fragment {
         String title = txtTitle.getText().toString();
         String content = txtEntry.getText().toString();
         String date = getArguments().getString(Constants.DATE);
+        String time = getArguments().getString(Constants.TIME);
+
         long wordsCount = UtilsMain.countWords(content);
 
         long journalID = mEntryViewModel.getCurrJournal().getValue();// activity.currJournal.getValue();
@@ -94,7 +96,7 @@ public class EditEntryFragment extends Fragment {
             journalID = 1;
         }
 
-        Entry entry = new Entry(id,title,content,date,journalID, wordsCount);
+        Entry entry = new Entry(id,title,content,date,time,journalID, wordsCount);
 
         mEntryViewModel.updateEntry(entry);
     }

@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 import com.applandeo.materialcalendarview.EventDay;
 import com.example.journal22.R;
 import com.example.journal22.data.entity.Entry;
+import com.example.journal22.ui.Constants;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,19 +32,19 @@ public class CalendarViewModel extends ViewModel {
         return mText;
     }
 
-    public List<EventDay> getCalendars(List<Entry> words) {
+    public List<EventDay> getCalendars(List<String> days) {
         List<Calendar> calendars = new ArrayList<>();
         List<EventDay> events = new ArrayList<>();
 
-        for (int i=0;i<words.size();i++){
-            Log.v("Date",words.get(i).getDate());
+        for (int i=0;i<days.size();i++){
+           // Log.v("Date",words.get(i).getDateWithoutTime());
 
-            SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MMMM-yyyy-EEEE-HH:mm", Locale.getDefault());
+            SimpleDateFormat inputFormat = new SimpleDateFormat(Constants.DATE_FORMAT, Locale.getDefault());
 
             Date myDate;
 
             try {
-                myDate = inputFormat.parse(words.get(i).getDate());
+                myDate = inputFormat.parse(days.get(i));
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(myDate);

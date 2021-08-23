@@ -26,7 +26,7 @@ public class ShowEntryFragment extends Fragment {
 
     //private DisplayEntryViewModel mViewModel;
     private TextView txtEntry, txtTitle;
-    private String title, content, date, id;
+    private String title, content, date, time,id;
     public static ShowEntryFragment newInstance() {
         return new ShowEntryFragment();
     }
@@ -48,6 +48,8 @@ public class ShowEntryFragment extends Fragment {
         title = getArguments().getString(Constants.TITLE);
         content = getArguments().getString(Constants.CONTENT);
         date = getArguments().getString(Constants.DATE);
+        time = getArguments().getString(Constants.TIME);
+
         id = getArguments().getString(Constants.ID);
 
         txtEntry.setMovementMethod(new ScrollingMovementMethod());
@@ -65,7 +67,7 @@ public class ShowEntryFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Bundle extras = UtilsMain.bundleUp(title, content, date, id);//new Bundle();
+                        Bundle extras = UtilsMain.bundleUp(title, content, date, time,id);//new Bundle();
                         //Toast.makeText(getContext(), content, Toast.LENGTH_SHORT).show();
                         Navigation.findNavController(view).navigate(R.id.action_display_entry_to_editEntry,extras);
 

@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 
 import com.example.journal22.data.JournalAndEntries;
+import com.example.journal22.data.JournalCount;
 import com.example.journal22.data.MyDatabase;
 import com.example.journal22.data.dao.JournalDao;
 import com.example.journal22.data.entity.Journal;
@@ -48,7 +49,9 @@ public class JournalRepo {
     public LiveData<List<JournalAndEntries>> getAllJournalsAndEntries() {
         return mJournalDao.getJournalAndEntries();
     }
-
+    public LiveData<List<JournalCount>> getAllJournalsAndCount() {
+        return mJournalDao.getCount();
+    }
 
     public void insertJournal(Journal journal)  {
         new JournalRepo.insertJournalAsyncTask(mJournalDao).execute(journal);

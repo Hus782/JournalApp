@@ -129,7 +129,7 @@ public class TemplateManagerFragment extends Fragment {
         String title = temp.getTitle();
         String content = temp.getContent();
 
-        Bundle extras = UtilsMain.bundleUp(title, content, null, id);//new Bundle();
+        Bundle extras = UtilsMain.bundleUp(title, content, null, null,id);//new Bundle();
 
         // access parent fragment (try to)
         Navigation.findNavController(getView()).navigate(R.id.action_template_manager_to_display_template, extras);

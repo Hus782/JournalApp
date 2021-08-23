@@ -72,6 +72,8 @@ public class EntriesFragment extends Fragment {
                 });
 
         txtTotalEntries = root.findViewById(R.id.txtTotalEntries);
+        txtTotalDays = root.findViewById(R.id.txtTotalDays);
+
         //set today's date
         Date c = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
@@ -88,6 +90,9 @@ public class EntriesFragment extends Fragment {
 
               adapter.submitList(entries);
             txtTotalEntries.setText(String.format("%d entries", entries.size()));
+            mEntryViewModel.getDays().observe(getViewLifecycleOwner(), days -> {
+                txtTotalDays.setText(String.format("%d days", days.size()));
+            });
 
           //      Toast.makeText(root.getContext(), "THE SIZE OF WORDS IS :"+ entries.size(),
           //          Toast.LENGTH_SHORT).show();
@@ -138,12 +143,13 @@ public class EntriesFragment extends Fragment {
         Entry entry = mEntryViewModel.getEntry(position);
         String id = String.valueOf(entry.getEntry_id());
         String date = entry.getDate();
+        String time = entry.getTime();
         TextView txtContent = view.findViewById(R.id.txtContent);
         String content = txtContent.getText().toString();
         TextView txtName = view.findViewById(R.id.txtName);
         String title = txtName.getText().toString();
 
-        Bundle extras = UtilsMain.bundleUp(title, content, date, id);//new Bundle();
+        Bundle extras = UtilsMain.bundleUp(title, content, date,time, id);//new Bundle();
 
         // access parent fragment (try to)
         NavHostFragment navHostFragment = (NavHostFragment) getParentFragment();
@@ -175,10 +181,12 @@ public class EntriesFragment extends Fragment {
                     String title = "Updated title";
                     String content = entry.getContent();
                     String date = entry.getDate();
+                    String time = entry.getTime();
+
                     long journalID = 0;
                     long wordsCount = UtilsMain.countWords(content);
 
-                    Entry updateEntry = new Entry(id,title,content,date,journalID,wordsCount);
+                    Entry updateEntry = new Entry(id,title,content,date,time,journalID,wordsCount);
 
                     mEntryViewModel.updateEntry(updateEntry);
                     Toast.makeText(root.getContext(), "Updated (probably)", Toast.LENGTH_SHORT).show();

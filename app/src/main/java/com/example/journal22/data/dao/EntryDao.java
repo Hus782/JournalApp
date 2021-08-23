@@ -25,6 +25,9 @@ public interface EntryDao {
     @Query("Select * from ENTRIES")
     LiveData<List<Entry>> getEntryListAll();
 
+    @Query("Select DISTINCT date from ENTRIES")
+    LiveData<List<String>> getAllEntryDays();
+
     @Delete
     void deleteEntry(Entry entry);
 

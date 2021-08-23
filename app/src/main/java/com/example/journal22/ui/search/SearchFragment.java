@@ -120,12 +120,14 @@ public class SearchFragment extends Fragment {
         Entry entry = mEntryViewModel.getEntry(position);
         String id = String.valueOf(entry.getEntry_id());
         String date = entry.getDate();
+        String time = entry.getTime();
+
         TextView txtContent = view.findViewById(R.id.txtContent);
         String content = txtContent.getText().toString();
         TextView txtName = view.findViewById(R.id.txtName);
         String title = txtName.getText().toString();
 
-        Bundle extras = UtilsMain.bundleUp(title, content, date, id);//new Bundle();
+        Bundle extras = UtilsMain.bundleUp(title, content, date, time,id);//new Bundle();
 
 
 
@@ -157,10 +159,12 @@ public class SearchFragment extends Fragment {
                     String title = "Updated title";
                     String content = entry.getContent();
                     String date = entry.getDate();
+                    String time = entry.getTime();
+
                     long journalID = 0;
                     long wordsCount = UtilsMain.countWords(content);
 
-                    Entry updateEntry = new Entry(id,title,content,date,journalID,wordsCount);
+                    Entry updateEntry = new Entry(id,title,content,date,time,journalID,wordsCount);
 
                     mEntryViewModel.updateEntry(updateEntry);
                     Toast.makeText(root.getContext(), "Updated (probably)", Toast.LENGTH_SHORT).show();
